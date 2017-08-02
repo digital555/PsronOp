@@ -21,6 +21,7 @@ import android.widget.ToggleButton;
 import java.io.ByteArrayOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Timer;
@@ -54,13 +55,16 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     private Handler handler;
 
-    public DatagramSocket mDataGramSocket;
+    public DatagramSocket mDataGramSocketReceive;
+    public DatagramSocket mDataGramSocketSend;
+    InetAddress addr;
 
-    boolean flag1;
+    boolean flag1 = false;
 
     public Bitmap bmpFromMcd;
     public Bitmap bmpToMcd;
     public byte[] frameFromMcd = new byte[63000];
+    public byte[] frameToMcd = new byte[63000];
 
 
     @Override
@@ -72,9 +76,10 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         handler = new Handler();
 
         try {
-            mDataGramSocket = new DatagramSocket(11000);
-            mDataGramSocket.setReuseAddress(true);
-            mDataGramSocket.setSoTimeout(1000);
+            mDataGramSocketReceive = new DatagramSocket(11000);
+            mDataGramSocketReceive.setReuseAddress(true);
+            mDataGramSocketReceive.setSoTimeout(1000);
+            mDataGramSocketSend = new DatagramSocket();
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -142,48 +147,58 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     public void receive() {
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        if(flag1) {
 
-                //String text;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    //String text;
 
 
-
-                try {
-                    DatagramPacket p = new DatagramPacket(frameFromMcd, frameFromMcd.length);
-                    //while (true) {  // && counter < 100 TODO
-                    // send to server omitted
                     try {
-                        mDataGramSocket.receive(p);
+                        DatagramPacket p = new DatagramPacket(frameFromMcd, frameFromMcd.length);
+                        //while (true) {  // && counter < 100 TODO
+                        // send to server omitted
+                        try {
+                            mDataGramSocketReceive.receive(p);
 
-                        bmpFromMcd = BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length);
-                        mImageViewMCD.setImageBitmap(bmpFromMcd);
+                            bmpFromMcd = BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length);
+                            mImageViewMCD.setImageBitmap(bmpFromMcd);
 
-                        //text = new String(message, 0, p.getLength());
-                        // If you're not using an infinite loop:
-                        //mDataGramSocket.close();
-                        //showToast(text);
-                    } catch (SocketTimeoutException | NullPointerException e) {
-                        // no response received after 1 second. continue sending
+                            //text = new String(message, 0, p.getLength());
+                            // If you're not using an infinite loop:
+                            //mDataGramSocketReceive.close();
+                            //showToast(text);
+                        } catch (SocketTimeoutException | NullPointerException e) {
+                            // no response received after 1 second. continue sending
+                            e.printStackTrace();
+                            //}
+                        }
+                    } catch (Exception e) {
                         e.printStackTrace();
-                        //}
+                        // return "error:" + e.getMessage();
+                        //mReceiveTask.publish("error:" + e.getMessage());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    // return "error:" + e.getMessage();
-                    //mReceiveTask.publish("error:" + e.getMessage());
+                    // return "out";
                 }
-                // return "out";
-            }
-        });
+            });
+        }
     }
 
-    public void captureVideoSurface(){
+    public void casVideoSurface(){
         bmpToMcd = mVideoSurface.getBitmap();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-        outputStream.toByteArray();
+        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 10, outputStream);
+        frameToMcd = outputStream.toByteArray();
+        try {
+            addr = InetAddress.getByName("10.3.2.38");
+            DatagramPacket p = new DatagramPacket(frameToMcd, frameToMcd.length,addr,11000);
+            mDataGramSocketSend.send(p);
+        } catch (Exception e){
+            showToast(e.toString());
+        }
+
 
     }
 
@@ -335,12 +350,14 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 //switchCameraMode(SettingsDefinitions.CameraMode.SHOOT_PHOTO);
                 mVideoSurface.setVisibility(View.VISIBLE);
                 mImageViewMCD.setVisibility(View.INVISIBLE);
+                flag1 = false;
                 break;
             }
             case R.id.btn_record_video_mode:{
                 //switchCameraMode(SettingsDefinitions.CameraMode.RECORD_VIDEO);
                 mVideoSurface.setVisibility(View.INVISIBLE);
                 mImageViewMCD.setVisibility(View.VISIBLE);
+                flag1 = true;
                 try {
                     Timer timer1 = new Timer();
                     MyTimerTask timer1_task = new MyTimerTask();
@@ -451,6 +468,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     {
         public void run()
         {
+            casVideoSurface();
             receive();
         }
     }

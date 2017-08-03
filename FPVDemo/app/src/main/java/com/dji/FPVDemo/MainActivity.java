@@ -11,6 +11,9 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.TextureView.SurfaceTextureListener;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -52,6 +55,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     private ToggleButton mRecordBtn;
     private TextView recordingTime;
     private ImageView mImageViewMCD;
+    private ImageView mImageViewLay;
+    private WebView myWebView;
+    private ImageView mDogPose;
 
     private Handler handler;
 
@@ -76,7 +82,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         handler = new Handler();
 
         try {
-            mDataGramSocketReceive = new DatagramSocket(11000);
+            mDataGramSocketReceive = new DatagramSocket(11004);
             mDataGramSocketReceive.setReuseAddress(true);
             mDataGramSocketReceive.setSoTimeout(1000);
             mDataGramSocketSend = new DatagramSocket();
@@ -86,6 +92,12 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
 
         initUI();
+
+        myWebView = (WebView) findViewById(R.id.webWiebView);
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        myWebView.setWebViewClient(new WebViewClient());
+        myWebView.loadUrl("http://cyberdog.herokuapp.com/operation_map");
 
         // The callback for receiving the raw H264 video data for camera live view
         mReceivedVideoDataCallBack = new VideoFeeder.VideoDataCallback() {
@@ -147,42 +159,47 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     public void receive() {
 
-        if(flag1) {
+        try {
 
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+            if (flag1) {
 
-                    //String text;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        //String text;
 
 
-                    try {
-                        DatagramPacket p = new DatagramPacket(frameFromMcd, frameFromMcd.length);
-                        //while (true) {  // && counter < 100 TODO
-                        // send to server omitted
                         try {
-                            mDataGramSocketReceive.receive(p);
+                            DatagramPacket p = new DatagramPacket(frameFromMcd, frameFromMcd.length);
+                            //while (true) {  // && counter < 100 TODO
+                            // send to server omitted
+                            try {
+                                mDataGramSocketReceive.receive(p);
 
-                            bmpFromMcd = BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length);
-                            mImageViewMCD.setImageBitmap(bmpFromMcd);
+                                bmpFromMcd = BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length);
+                                mImageViewMCD.setImageBitmap(bmpFromMcd);
 
-                            //text = new String(message, 0, p.getLength());
-                            // If you're not using an infinite loop:
-                            //mDataGramSocketReceive.close();
-                            //showToast(text);
-                        } catch (SocketTimeoutException | NullPointerException e) {
-                            // no response received after 1 second. continue sending
-                            e.printStackTrace();
-                            //}
+                                //text = new String(message, 0, p.getLength());
+                                // If you're not using an infinite loop:
+                                //mDataGramSocketReceive.close();
+                                //showToast(text);
+                            } catch (SocketTimeoutException | NullPointerException e) {
+                                // no response received after 1 second. continue sending
+                                showToast(e.toString());
+                                //}
+                            }
+                        } catch (Exception e) {
+                            showToast(e.toString());
+                            // return "error:" + e.getMessage();
+                            //mReceiveTask.publish("error:" + e.getMessage());
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        // return "error:" + e.getMessage();
-                        //mReceiveTask.publish("error:" + e.getMessage());
+                        // return "out";
                     }
-                    // return "out";
-                }
-            });
+                });
+            }
+        } catch (Exception e){
+            showToast(e.toString());
         }
     }
 
@@ -250,6 +267,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         mRecordVideoModeBtn = (Button) findViewById(R.id.btn_record_video_mode);
         mImageViewMCD = (ImageView) findViewById(R.id.imageViewMCD);
         mImageViewMCD.setImageResource(R.drawable.btn_draw_end);
+        mImageViewLay = (ImageView) findViewById(R.id.imageViewLay);
+        mDogPose = (ImageView) findViewById(R.id.dog_pose);
 
 
         if (null != mVideoSurface) {
@@ -343,25 +362,31 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
         switch (v.getId()) {
             case R.id.btn_capture:{
-                captureAction();
+                //captureAction();
+                myWebView.setVisibility(View.VISIBLE);
+                flag1 = false;
                 break;
             }
             case R.id.btn_shoot_photo_mode:{
                 //switchCameraMode(SettingsDefinitions.CameraMode.SHOOT_PHOTO);
-                mVideoSurface.setVisibility(View.VISIBLE);
+                //mVideoSurface.setVisibility(View.VISIBLE);
                 mImageViewMCD.setVisibility(View.INVISIBLE);
+                mImageViewLay.setVisibility(View.INVISIBLE);
+                myWebView.setVisibility(View.INVISIBLE);
                 flag1 = false;
                 break;
             }
             case R.id.btn_record_video_mode:{
                 //switchCameraMode(SettingsDefinitions.CameraMode.RECORD_VIDEO);
-                mVideoSurface.setVisibility(View.INVISIBLE);
+                //mVideoSurface.setVisibility(View.INVISIBLE);
                 mImageViewMCD.setVisibility(View.VISIBLE);
+                mImageViewLay.setVisibility(View.VISIBLE);
+                myWebView.setVisibility(View.INVISIBLE);
                 flag1 = true;
                 try {
                     Timer timer1 = new Timer();
                     MyTimerTask timer1_task = new MyTimerTask();
-                    timer1.schedule(timer1_task, 20, 250);
+                    timer1.schedule(timer1_task, 25, 250);
                 } catch (Exception e) {
                     showToast(e.toString());
                 }

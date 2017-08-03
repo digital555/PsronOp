@@ -35,6 +35,7 @@ import dji.common.camera.SystemState;
 import dji.common.error.DJIError;
 import dji.common.product.Model;
 import dji.common.util.CommonCallbacks;
+import dji.sdk.airlink.LightbridgeLink;
 import dji.sdk.base.BaseProduct;
 import dji.sdk.camera.Camera;
 import dji.sdk.camera.VideoFeeder;
@@ -59,6 +60,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     private WebView myWebView;
     private ImageView mDogPose;
 
+
     private Handler handler;
 
     public DatagramSocket mDataGramSocketReceive;
@@ -71,6 +73,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     public Bitmap bmpToMcd;
     public byte[] frameFromMcd = new byte[63000];
     public byte[] frameToMcd = new byte[63000];
+
+    private LightbridgeLink link;
 
 
     @Override
@@ -149,6 +153,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
             });
 
         }
+
+        link = new LightbridgeLink() {
+            @Override
+            public boolean isSecondaryVideoOutputSupported() {
+                return true;
+            }
+        };
 
     }
 
@@ -271,6 +282,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         mDogPose = (ImageView) findViewById(R.id.dog_pose);
 
 
+
         if (null != mVideoSurface) {
             mVideoSurface.setSurfaceTextureListener(this);
         }
@@ -374,6 +386,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 mImageViewLay.setVisibility(View.INVISIBLE);
                 myWebView.setVisibility(View.INVISIBLE);
                 flag1 = false;
+                link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
                 break;
             }
             case R.id.btn_record_video_mode:{
@@ -383,6 +396,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 mImageViewLay.setVisibility(View.VISIBLE);
                 myWebView.setVisibility(View.INVISIBLE);
                 flag1 = true;
+                link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
                 try {
                     Timer timer1 = new Timer();
                     MyTimerTask timer1_task = new MyTimerTask();
@@ -488,6 +502,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         }
 
     }
+
+
 
     class MyTimerTask extends TimerTask
     {

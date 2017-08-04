@@ -76,6 +76,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     public byte[] frameToMcd = new byte[63000];
 
     private LightbridgeLink link;
+    private Thread Thread1;
 
 
     @Override
@@ -286,6 +287,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         mImageViewMCD.setImageResource(R.drawable.btn_draw_end);
         mImageViewLay = (ImageView) findViewById(R.id.imageViewLay);
         mDogPose = (ImageView) findViewById(R.id.dog_pose);
+        mImageViewLay.setImageResource(R.drawable.blak_layer);
 
 
 
@@ -405,13 +407,16 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 myWebView.setVisibility(View.INVISIBLE);
                 flag1 = true;
                 //link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
-                try {
+                /*try {
                     Timer timer1 = new Timer();
                     MyTimerTask timer1_task = new MyTimerTask();
                     timer1.schedule(timer1_task, 25, 250);
                 } catch (Exception e) {
                     showToast(e.toString() + " " + "timery");
-                }
+                }*/
+
+                Thread1 = new Thread(new MyRun());
+                Thread1.start();
 
                 //receive();
                 break;
@@ -519,6 +524,19 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         {
             casVideoSurface();
             receive();
+        }
+    }
+
+    public class MyRun implements Runnable {
+
+        @Override
+        public void run() {
+            while (true) {
+                casVideoSurface();
+
+                if(flag1)
+                receive();
+            }
         }
     }
 }

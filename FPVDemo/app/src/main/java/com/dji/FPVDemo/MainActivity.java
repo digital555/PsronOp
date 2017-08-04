@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
@@ -83,6 +84,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         handler = new Handler();
 
         try {
@@ -91,7 +97,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
             mDataGramSocketReceive.setSoTimeout(1000);
             mDataGramSocketSend = new DatagramSocket();
         } catch (SocketException e) {
-            e.printStackTrace();
+            showToast(e.toString() + " " + "sockets");
         }
 
 
@@ -179,10 +185,10 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                     public void run() {
 
                         //String text;
-
+                        DatagramPacket p = new DatagramPacket(frameFromMcd, frameFromMcd.length);
 
                         try {
-                            DatagramPacket p = new DatagramPacket(frameFromMcd, frameFromMcd.length);
+
                             //while (true) {  // && counter < 100 TODO
                             // send to server omitted
                             try {
@@ -197,11 +203,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                                 //showToast(text);
                             } catch (SocketTimeoutException | NullPointerException e) {
                                 // no response received after 1 second. continue sending
-                                showToast(e.toString());
+                                showToast(e.toString() + " " + "recieve3");
                                 //}
                             }
                         } catch (Exception e) {
-                            showToast(e.toString());
+                            showToast(e.toString() + " " + "recieve2");
                             // return "error:" + e.getMessage();
                             //mReceiveTask.publish("error:" + e.getMessage());
                         }
@@ -210,21 +216,21 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 });
             }
         } catch (Exception e){
-            showToast(e.toString());
+            showToast(e.toString() + " " + "recieve1");
         }
     }
 
     public void casVideoSurface(){
         bmpToMcd = mVideoSurface.getBitmap();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 10, outputStream);
+        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 5, outputStream);
         frameToMcd = outputStream.toByteArray();
         try {
             addr = InetAddress.getByName("10.3.2.38");
             DatagramPacket p = new DatagramPacket(frameToMcd, frameToMcd.length,addr,11000);
             mDataGramSocketSend.send(p);
         } catch (Exception e){
-            showToast(e.toString());
+            showToast(e.toString() + " " + "casVideoSurface");
         }
 
 
@@ -298,9 +304,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    startRecord();
+                    //startRecord();
+                    link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
                 } else {
-                    stopRecord();
+                    //stopRecord();
+                    link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
                 }
             }
         });
@@ -386,7 +394,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 mImageViewLay.setVisibility(View.INVISIBLE);
                 myWebView.setVisibility(View.INVISIBLE);
                 flag1 = false;
-                link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
+                //link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
                 break;
             }
             case R.id.btn_record_video_mode:{
@@ -396,13 +404,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 mImageViewLay.setVisibility(View.VISIBLE);
                 myWebView.setVisibility(View.INVISIBLE);
                 flag1 = true;
-                link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
+                //link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
                 try {
                     Timer timer1 = new Timer();
                     MyTimerTask timer1_task = new MyTimerTask();
                     timer1.schedule(timer1_task, 25, 250);
                 } catch (Exception e) {
-                    showToast(e.toString());
+                    showToast(e.toString() + " " + "timery");
                 }
 
                 //receive();

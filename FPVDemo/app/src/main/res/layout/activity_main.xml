@@ -92,7 +92,14 @@
             android:layout_weight="1"
             android:text="Video MCD" />
 
-     </LinearLayout>
+        <Button
+            android:id="@+id/btn_ip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ip" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/timer"
@@ -105,5 +112,19 @@
         android:textColor="#ffffff"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/editTextIp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ip to send video"
+        android:textAlignment="center"
+        android:visibility="visible"
+        tools:text="ip to send video" />
 
 </RelativeLayout>

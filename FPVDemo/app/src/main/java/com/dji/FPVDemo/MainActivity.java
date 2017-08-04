@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.EditText;
 
 import java.io.ByteArrayOutputStream;
 import java.net.DatagramPacket;
@@ -53,7 +54,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     protected DJICodecManager mCodecManager = null;
 
     protected TextureView mVideoSurface = null;
-    private Button mCaptureBtn, mShootPhotoModeBtn, mRecordVideoModeBtn;
+    private Button mCaptureBtn, mShootPhotoModeBtn, mRecordVideoModeBtn, mIpBtn;
     private ToggleButton mRecordBtn;
     private TextView recordingTime;
     private ImageView mImageViewMCD;
@@ -61,6 +62,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     private WebView myWebView;
     private ImageView mDogPose;
 
+    private EditText editTextip;
 
     private Handler handler;
 
@@ -72,8 +74,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     public Bitmap bmpFromMcd;
     public Bitmap bmpToMcd;
-    public byte[] frameFromMcd = new byte[63000];
-    public byte[] frameToMcd = new byte[63000];
+    public byte[] frameFromMcd = new byte[60000];
+    public byte[] frameToMcd = new byte[60000];
+
+    String[] DogGPS;
+    String[] DogIMU;
 
     private LightbridgeLink link;
     private Thread Thread1;
@@ -227,7 +232,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 5, outputStream);
         frameToMcd = outputStream.toByteArray();
         try {
-            addr = InetAddress.getByName("10.3.2.38");
+            addr = InetAddress.getByName(editTextip.getText().toString());
             DatagramPacket p = new DatagramPacket(frameToMcd, frameToMcd.length,addr,11000);
             mDataGramSocketSend.send(p);
         } catch (Exception e){
@@ -283,11 +288,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         mRecordBtn = (ToggleButton) findViewById(R.id.btn_record);
         mShootPhotoModeBtn = (Button) findViewById(R.id.btn_shoot_photo_mode);
         mRecordVideoModeBtn = (Button) findViewById(R.id.btn_record_video_mode);
+        mIpBtn = (Button) findViewById(R.id.btn_ip);
         mImageViewMCD = (ImageView) findViewById(R.id.imageViewMCD);
         mImageViewMCD.setImageResource(R.drawable.btn_draw_end);
         mImageViewLay = (ImageView) findViewById(R.id.imageViewLay);
         mDogPose = (ImageView) findViewById(R.id.dog_pose);
         mImageViewLay.setImageResource(R.drawable.blak_layer);
+        editTextip = (EditText) findViewById(R.id.editTextIp);
 
 
 
@@ -299,6 +306,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         mRecordBtn.setOnClickListener(this);
         mShootPhotoModeBtn.setOnClickListener(this);
         mRecordVideoModeBtn.setOnClickListener(this);
+        mIpBtn.setOnClickListener(this);
 
         recordingTime.setVisibility(View.INVISIBLE);
 
@@ -386,6 +394,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
             case R.id.btn_capture:{
                 //captureAction();
                 myWebView.setVisibility(View.VISIBLE);
+                mImageViewMCD.setVisibility(View.INVISIBLE);
+                mImageViewLay.setVisibility(View.INVISIBLE);
                 flag1 = false;
                 break;
             }
@@ -404,6 +414,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 //mVideoSurface.setVisibility(View.INVISIBLE);
                 mImageViewMCD.setVisibility(View.VISIBLE);
                 mImageViewLay.setVisibility(View.VISIBLE);
+                editTextip.setVisibility(View.INVISIBLE);
                 myWebView.setVisibility(View.INVISIBLE);
                 flag1 = true;
                 //link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
@@ -420,6 +431,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
                 //receive();
                 break;
+            }
+            case R.id.btn_ip:{
+                editTextip.setVisibility(View.VISIBLE);
             }
             default:
                 break;
@@ -514,6 +528,37 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
             }); // Execute the stopRecordVideo API
         }
 
+    }
+
+    public void setmDogPose(String Dog ){
+
+        if (Dog.substring(0, 3) == "GPS")
+        {
+            // 3 i 4 to szerokosc i dlugosc
+            DogGPS = Dog.split("\t");
+
+            /*if (DogGPS.length > 4);
+                SqlConn(DogGPS[3], DogGPS[4]);*/
+        }
+
+        if (Dog.substring(0, 3) == "IMU")
+        {
+            DogIMU = Dog.split("\t");
+            if (DogIMU.length > 3)
+            {
+                int pieseueue = Integer.parseInt(DogIMU[3].substring(0, 3));
+
+                if (pieseueue > 185 | pieseueue < 165)
+                {
+                    mDogPose.setImageResource(R.drawable.siedzi);
+                }
+                else
+                {
+                    mDogPose.setImageResource(R.drawable.stoi);
+                }
+            }
+            //Console.WriteLine(Dog);
+        }
     }
 
 

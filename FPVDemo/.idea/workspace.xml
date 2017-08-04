@@ -40,40 +40,60 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="388" column="21" selection-start-line="388" selection-start-column="16" selection-end-line="388" selection-end-column="21" />
+            <state relative-caret-position="381">
+              <caret line="428" column="46" selection-start-line="428" selection-start-column="41" selection-end-line="428" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3662#3947#0" expanded="true" />
-                <element signature="e#3946#3947#0" expanded="true" />
-                <element signature="e#4088#5511#0" expanded="true" />
-                <element signature="e#4730#5455#0" expanded="true" />
-                <element signature="e#5454#5455#0" expanded="true" />
-                <element signature="e#5510#5511#0" expanded="true" />
-                <element signature="e#5541#5702#0" expanded="true" />
-                <element signature="e#5701#5702#0" expanded="true" />
-                <element signature="e#5749#5750#0" expanded="true" />
-                <element signature="e#5780#5781#0" expanded="true" />
-                <element signature="e#5884#7516#0" expanded="true" />
-                <element signature="e#7515#7516#0" expanded="true" />
-                <element signature="e#10185#10673#0" expanded="true" />
-                <element signature="e#10672#10673#0" expanded="true" />
-                <element signature="e#10870#10902#0" expanded="true" />
-                <element signature="e#12576#12731#0" expanded="true" />
-                <element signature="e#12730#12731#0" expanded="true" />
-                <element signature="e#14738#15112#0" expanded="true" />
-                <element signature="e#15111#15112#0" expanded="true" />
-                <element signature="e#15495#16540#0" expanded="true" />
-                <element signature="e#15709#16478#0" expanded="true" />
-                <element signature="e#15867#16420#0" expanded="true" />
-                <element signature="e#16419#16420#0" expanded="true" />
-                <element signature="e#16477#16478#0" expanded="true" />
-                <element signature="e#16539#16540#0" expanded="true" />
-                <element signature="e#17409#17800#0" expanded="true" />
-                <element signature="e#17799#17800#0" expanded="true" />
+                <element signature="e#3778#4063#0" expanded="true" />
+                <element signature="e#4062#4063#0" expanded="true" />
+                <element signature="e#4204#5627#0" expanded="true" />
+                <element signature="e#4846#5571#0" expanded="true" />
+                <element signature="e#5570#5571#0" expanded="true" />
+                <element signature="e#5626#5627#0" expanded="true" />
+                <element signature="e#5657#5818#0" expanded="true" />
+                <element signature="e#5817#5818#0" expanded="true" />
+                <element signature="e#5865#5866#0" expanded="true" />
+                <element signature="e#5896#5897#0" expanded="true" />
+                <element signature="e#6000#7632#0" expanded="true" />
+                <element signature="e#7631#7632#0" expanded="true" />
+                <element signature="e#10478#10966#0" expanded="true" />
+                <element signature="e#10965#10966#0" expanded="true" />
+                <element signature="e#11163#11195#0" expanded="true" />
+                <element signature="e#12869#13024#0" expanded="true" />
+                <element signature="e#13023#13024#0" expanded="true" />
+                <element signature="e#15312#15686#0" expanded="true" />
+                <element signature="e#15685#15686#0" expanded="true" />
+                <element signature="e#16069#17114#0" expanded="true" />
+                <element signature="e#16283#17052#0" expanded="true" />
+                <element signature="e#16441#16994#0" expanded="true" />
+                <element signature="e#16993#16994#0" expanded="true" />
+                <element signature="e#17051#17052#0" expanded="true" />
+                <element signature="e#17113#17114#0" expanded="true" />
+                <element signature="e#17983#18374#0" expanded="true" />
+                <element signature="e#18373#18374#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CTrollBTsimple.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollBTsimple.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="528">
+              <caret line="224" column="5" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1610#1611#0" expanded="true" />
+                <element signature="e#1646#1647#0" expanded="true" />
+                <element signature="e#1927#1928#0" expanded="true" />
+                <element signature="e#1962#1963#0" expanded="true" />
+                <element signature="e#2003#2004#0" expanded="true" />
+                <element signature="e#2035#2036#0" expanded="true" />
+                <element signature="e#2071#2072#0" expanded="true" />
+                <element signature="e#2105#2106#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,24 +102,24 @@
       <file leaf-file-name="CTrollSocket.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollSocket.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
+            <state relative-caret-position="221">
               <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
           <provider selected="true" editor-type-id="android-designer2">
             <state />
           </provider>
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="1377">
+            <state relative-caret-position="193">
               <caret line="87" column="29" selection-start-line="87" selection-start-column="29" selection-end-line="87" selection-end-column="50" />
-              <folding>
-                <marker date="1501842909281" expanded="true" signature="608:786" ph="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -2826,8 +2846,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/LightbridgeLink.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_connection.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/ConnectionActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollBTsimple.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -2869,6 +2890,48 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="FPVDemo" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FPVDemo" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FPVDemo" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FPVDemo" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FPVDemo" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -3246,6 +3309,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3147942" sideWeight="0.5362473" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3147942" sideWeight="0.46375266" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.49573562" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32973805" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -3269,7 +3333,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23959938" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -3289,14 +3352,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/ConnectionActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/FPVDemoApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -3315,9 +3370,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="35" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <marker date="1501842909281" expanded="true" signature="608:786" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer2">
@@ -3354,33 +3407,33 @@
           <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3662#3947#0" expanded="true" />
-            <element signature="e#3946#3947#0" expanded="true" />
-            <element signature="e#4088#5511#0" expanded="true" />
-            <element signature="e#4730#5455#0" expanded="true" />
-            <element signature="e#5454#5455#0" expanded="true" />
-            <element signature="e#5510#5511#0" expanded="true" />
-            <element signature="e#5541#5702#0" expanded="true" />
-            <element signature="e#5701#5702#0" expanded="true" />
-            <element signature="e#5749#5750#0" expanded="true" />
-            <element signature="e#5780#5781#0" expanded="true" />
-            <element signature="e#5884#7516#0" expanded="true" />
-            <element signature="e#7515#7516#0" expanded="true" />
-            <element signature="e#10185#10673#0" expanded="true" />
-            <element signature="e#10672#10673#0" expanded="true" />
-            <element signature="e#10870#10902#0" expanded="true" />
-            <element signature="e#12576#12731#0" expanded="true" />
-            <element signature="e#12730#12731#0" expanded="true" />
-            <element signature="e#14738#15112#0" expanded="true" />
-            <element signature="e#15111#15112#0" expanded="true" />
-            <element signature="e#15495#16540#0" expanded="true" />
-            <element signature="e#15709#16478#0" expanded="true" />
-            <element signature="e#15867#16420#0" expanded="true" />
-            <element signature="e#16419#16420#0" expanded="true" />
-            <element signature="e#16477#16478#0" expanded="true" />
-            <element signature="e#16539#16540#0" expanded="true" />
-            <element signature="e#17409#17800#0" expanded="true" />
-            <element signature="e#17799#17800#0" expanded="true" />
+            <element signature="e#3778#4063#0" expanded="true" />
+            <element signature="e#4062#4063#0" expanded="true" />
+            <element signature="e#4204#5627#0" expanded="true" />
+            <element signature="e#4846#5571#0" expanded="true" />
+            <element signature="e#5570#5571#0" expanded="true" />
+            <element signature="e#5626#5627#0" expanded="true" />
+            <element signature="e#5657#5818#0" expanded="true" />
+            <element signature="e#5817#5818#0" expanded="true" />
+            <element signature="e#5865#5866#0" expanded="true" />
+            <element signature="e#5896#5897#0" expanded="true" />
+            <element signature="e#6000#7632#0" expanded="true" />
+            <element signature="e#7631#7632#0" expanded="true" />
+            <element signature="e#10478#10966#0" expanded="true" />
+            <element signature="e#10965#10966#0" expanded="true" />
+            <element signature="e#11163#11195#0" expanded="true" />
+            <element signature="e#12869#13024#0" expanded="true" />
+            <element signature="e#13023#13024#0" expanded="true" />
+            <element signature="e#15312#15686#0" expanded="true" />
+            <element signature="e#15685#15686#0" expanded="true" />
+            <element signature="e#16069#17114#0" expanded="true" />
+            <element signature="e#16283#17052#0" expanded="true" />
+            <element signature="e#16441#16994#0" expanded="true" />
+            <element signature="e#16993#16994#0" expanded="true" />
+            <element signature="e#17051#17052#0" expanded="true" />
+            <element signature="e#17113#17114#0" expanded="true" />
+            <element signature="e#17983#18374#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3435,33 +3488,33 @@
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3662#3947#0" expanded="true" />
-            <element signature="e#3946#3947#0" expanded="true" />
-            <element signature="e#4088#5511#0" expanded="true" />
-            <element signature="e#4730#5455#0" expanded="true" />
-            <element signature="e#5454#5455#0" expanded="true" />
-            <element signature="e#5510#5511#0" expanded="true" />
-            <element signature="e#5541#5702#0" expanded="true" />
-            <element signature="e#5701#5702#0" expanded="true" />
-            <element signature="e#5749#5750#0" expanded="true" />
-            <element signature="e#5780#5781#0" expanded="true" />
-            <element signature="e#5884#7516#0" expanded="true" />
-            <element signature="e#7515#7516#0" expanded="true" />
-            <element signature="e#10185#10673#0" expanded="true" />
-            <element signature="e#10672#10673#0" expanded="true" />
-            <element signature="e#10870#10902#0" expanded="true" />
-            <element signature="e#12576#12731#0" expanded="true" />
-            <element signature="e#12730#12731#0" expanded="true" />
-            <element signature="e#14738#15112#0" expanded="true" />
-            <element signature="e#15111#15112#0" expanded="true" />
-            <element signature="e#15495#16540#0" expanded="true" />
-            <element signature="e#15709#16478#0" expanded="true" />
-            <element signature="e#15867#16420#0" expanded="true" />
-            <element signature="e#16419#16420#0" expanded="true" />
-            <element signature="e#16477#16478#0" expanded="true" />
-            <element signature="e#16539#16540#0" expanded="true" />
-            <element signature="e#17409#17800#0" expanded="true" />
-            <element signature="e#17799#17800#0" expanded="true" />
+            <element signature="e#3778#4063#0" expanded="true" />
+            <element signature="e#4062#4063#0" expanded="true" />
+            <element signature="e#4204#5627#0" expanded="true" />
+            <element signature="e#4846#5571#0" expanded="true" />
+            <element signature="e#5570#5571#0" expanded="true" />
+            <element signature="e#5626#5627#0" expanded="true" />
+            <element signature="e#5657#5818#0" expanded="true" />
+            <element signature="e#5817#5818#0" expanded="true" />
+            <element signature="e#5865#5866#0" expanded="true" />
+            <element signature="e#5896#5897#0" expanded="true" />
+            <element signature="e#6000#7632#0" expanded="true" />
+            <element signature="e#7631#7632#0" expanded="true" />
+            <element signature="e#10478#10966#0" expanded="true" />
+            <element signature="e#10965#10966#0" expanded="true" />
+            <element signature="e#11163#11195#0" expanded="true" />
+            <element signature="e#12869#13024#0" expanded="true" />
+            <element signature="e#13023#13024#0" expanded="true" />
+            <element signature="e#15312#15686#0" expanded="true" />
+            <element signature="e#15685#15686#0" expanded="true" />
+            <element signature="e#16069#17114#0" expanded="true" />
+            <element signature="e#16283#17052#0" expanded="true" />
+            <element signature="e#16441#16994#0" expanded="true" />
+            <element signature="e#16993#16994#0" expanded="true" />
+            <element signature="e#17051#17052#0" expanded="true" />
+            <element signature="e#17113#17114#0" expanded="true" />
+            <element signature="e#17983#18374#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3516,33 +3569,33 @@
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3662#3947#0" expanded="true" />
-            <element signature="e#3946#3947#0" expanded="true" />
-            <element signature="e#4088#5511#0" expanded="true" />
-            <element signature="e#4730#5455#0" expanded="true" />
-            <element signature="e#5454#5455#0" expanded="true" />
-            <element signature="e#5510#5511#0" expanded="true" />
-            <element signature="e#5541#5702#0" expanded="true" />
-            <element signature="e#5701#5702#0" expanded="true" />
-            <element signature="e#5749#5750#0" expanded="true" />
-            <element signature="e#5780#5781#0" expanded="true" />
-            <element signature="e#5884#7516#0" expanded="true" />
-            <element signature="e#7515#7516#0" expanded="true" />
-            <element signature="e#10185#10673#0" expanded="true" />
-            <element signature="e#10672#10673#0" expanded="true" />
-            <element signature="e#10870#10902#0" expanded="true" />
-            <element signature="e#12576#12731#0" expanded="true" />
-            <element signature="e#12730#12731#0" expanded="true" />
-            <element signature="e#14738#15112#0" expanded="true" />
-            <element signature="e#15111#15112#0" expanded="true" />
-            <element signature="e#15495#16540#0" expanded="true" />
-            <element signature="e#15709#16478#0" expanded="true" />
-            <element signature="e#15867#16420#0" expanded="true" />
-            <element signature="e#16419#16420#0" expanded="true" />
-            <element signature="e#16477#16478#0" expanded="true" />
-            <element signature="e#16539#16540#0" expanded="true" />
-            <element signature="e#17409#17800#0" expanded="true" />
-            <element signature="e#17799#17800#0" expanded="true" />
+            <element signature="e#3778#4063#0" expanded="true" />
+            <element signature="e#4062#4063#0" expanded="true" />
+            <element signature="e#4204#5627#0" expanded="true" />
+            <element signature="e#4846#5571#0" expanded="true" />
+            <element signature="e#5570#5571#0" expanded="true" />
+            <element signature="e#5626#5627#0" expanded="true" />
+            <element signature="e#5657#5818#0" expanded="true" />
+            <element signature="e#5817#5818#0" expanded="true" />
+            <element signature="e#5865#5866#0" expanded="true" />
+            <element signature="e#5896#5897#0" expanded="true" />
+            <element signature="e#6000#7632#0" expanded="true" />
+            <element signature="e#7631#7632#0" expanded="true" />
+            <element signature="e#10478#10966#0" expanded="true" />
+            <element signature="e#10965#10966#0" expanded="true" />
+            <element signature="e#11163#11195#0" expanded="true" />
+            <element signature="e#12869#13024#0" expanded="true" />
+            <element signature="e#13023#13024#0" expanded="true" />
+            <element signature="e#15312#15686#0" expanded="true" />
+            <element signature="e#15685#15686#0" expanded="true" />
+            <element signature="e#16069#17114#0" expanded="true" />
+            <element signature="e#16283#17052#0" expanded="true" />
+            <element signature="e#16441#16994#0" expanded="true" />
+            <element signature="e#16993#16994#0" expanded="true" />
+            <element signature="e#17051#17052#0" expanded="true" />
+            <element signature="e#17113#17114#0" expanded="true" />
+            <element signature="e#17983#18374#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3708,56 +3761,39 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollSocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="388" column="21" selection-start-line="388" selection-start-column="16" selection-end-line="388" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3662#3947#0" expanded="true" />
-            <element signature="e#3946#3947#0" expanded="true" />
-            <element signature="e#4088#5511#0" expanded="true" />
-            <element signature="e#4730#5455#0" expanded="true" />
-            <element signature="e#5454#5455#0" expanded="true" />
-            <element signature="e#5510#5511#0" expanded="true" />
-            <element signature="e#5541#5702#0" expanded="true" />
-            <element signature="e#5701#5702#0" expanded="true" />
-            <element signature="e#5749#5750#0" expanded="true" />
-            <element signature="e#5780#5781#0" expanded="true" />
-            <element signature="e#5884#7516#0" expanded="true" />
-            <element signature="e#7515#7516#0" expanded="true" />
-            <element signature="e#10185#10673#0" expanded="true" />
-            <element signature="e#10672#10673#0" expanded="true" />
-            <element signature="e#10870#10902#0" expanded="true" />
-            <element signature="e#12576#12731#0" expanded="true" />
-            <element signature="e#12730#12731#0" expanded="true" />
-            <element signature="e#14738#15112#0" expanded="true" />
-            <element signature="e#15111#15112#0" expanded="true" />
-            <element signature="e#15495#16540#0" expanded="true" />
-            <element signature="e#15709#16478#0" expanded="true" />
-            <element signature="e#15867#16420#0" expanded="true" />
-            <element signature="e#16419#16420#0" expanded="true" />
-            <element signature="e#16477#16478#0" expanded="true" />
-            <element signature="e#16539#16540#0" expanded="true" />
-            <element signature="e#17409#17800#0" expanded="true" />
-            <element signature="e#17799#17800#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/ConnectionActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollSocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollBTsimple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="224" column="5" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1610#1611#0" expanded="true" />
+            <element signature="e#1646#1647#0" expanded="true" />
+            <element signature="e#1927#1928#0" expanded="true" />
+            <element signature="e#1962#1963#0" expanded="true" />
+            <element signature="e#2003#2004#0" expanded="true" />
+            <element signature="e#2035#2036#0" expanded="true" />
+            <element signature="e#2071#2072#0" expanded="true" />
+            <element signature="e#2105#2106#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3774,15 +3810,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="1377">
+        <state relative-caret-position="193">
           <caret line="87" column="29" selection-start-line="87" selection-start-column="29" selection-end-line="87" selection-end-column="50" />
-          <folding>
-            <marker date="1501842909281" expanded="true" signature="608:786" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
       <provider selected="true" editor-type-id="android-designer2">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="428" column="46" selection-start-line="428" selection-start-column="41" selection-end-line="428" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3778#4063#0" expanded="true" />
+            <element signature="e#4062#4063#0" expanded="true" />
+            <element signature="e#4204#5627#0" expanded="true" />
+            <element signature="e#4846#5571#0" expanded="true" />
+            <element signature="e#5570#5571#0" expanded="true" />
+            <element signature="e#5626#5627#0" expanded="true" />
+            <element signature="e#5657#5818#0" expanded="true" />
+            <element signature="e#5817#5818#0" expanded="true" />
+            <element signature="e#5865#5866#0" expanded="true" />
+            <element signature="e#5896#5897#0" expanded="true" />
+            <element signature="e#6000#7632#0" expanded="true" />
+            <element signature="e#7631#7632#0" expanded="true" />
+            <element signature="e#10478#10966#0" expanded="true" />
+            <element signature="e#10965#10966#0" expanded="true" />
+            <element signature="e#11163#11195#0" expanded="true" />
+            <element signature="e#12869#13024#0" expanded="true" />
+            <element signature="e#13023#13024#0" expanded="true" />
+            <element signature="e#15312#15686#0" expanded="true" />
+            <element signature="e#15685#15686#0" expanded="true" />
+            <element signature="e#16069#17114#0" expanded="true" />
+            <element signature="e#16283#17052#0" expanded="true" />
+            <element signature="e#16441#16994#0" expanded="true" />
+            <element signature="e#16993#16994#0" expanded="true" />
+            <element signature="e#17051#17052#0" expanded="true" />
+            <element signature="e#17113#17114#0" expanded="true" />
+            <element signature="e#17983#18374#0" expanded="true" />
+            <element signature="e#18373#18374#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

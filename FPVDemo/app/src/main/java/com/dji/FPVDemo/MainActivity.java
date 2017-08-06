@@ -55,7 +55,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     protected TextureView mVideoSurface = null;
     private Button mCaptureBtn, mShootPhotoModeBtn, mRecordVideoModeBtn, mIpBtn;
-    private ToggleButton mRecordBtn;
+    private ToggleButton mRecordBtn, onoffBtn;
     private TextView recordingTime;
     private ImageView mImageViewMCD;
     private ImageView mImageViewLay;
@@ -71,6 +71,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     InetAddress addr;
 
     boolean flag1 = false;
+    boolean flag2 = false;
 
     public Bitmap bmpFromMcd;
     public Bitmap bmpToMcd;
@@ -200,8 +201,10 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                             try {
                                 mDataGramSocketReceive.receive(p);
 
-                                bmpFromMcd = BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length);
-                                mImageViewMCD.setImageBitmap(bmpFromMcd);
+                                /*bmpFromMcd = BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length);
+                                mImageViewMCD.setImageBitmap(bmpFromMcd);*/
+                                
+                                mImageViewMCD.setImageBitmap(BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length));
 
                                 //text = new String(message, 0, p.getLength());
                                 // If you're not using an infinite loop:
@@ -227,9 +230,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     }
 
     public void casVideoSurface(){
-        bmpToMcd = mVideoSurface.getBitmap();
+        bmpToMcd = Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 960,
+                540, false) ;
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 5, outputStream);
+        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 15, outputStream);
         frameToMcd = outputStream.toByteArray();
         try {
             addr = InetAddress.getByName(editTextip.getText().toString());
@@ -295,6 +300,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         mDogPose = (ImageView) findViewById(R.id.dog_pose);
         mImageViewLay.setImageResource(R.drawable.blak_layer);
         editTextip = (EditText) findViewById(R.id.editTextIp);
+        onoffBtn = (ToggleButton) findViewById(R.id.btn_onoff);
 
 
 
@@ -307,6 +313,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         mShootPhotoModeBtn.setOnClickListener(this);
         mRecordVideoModeBtn.setOnClickListener(this);
         mIpBtn.setOnClickListener(this);
+        onoffBtn.setOnClickListener(this);
 
         recordingTime.setVisibility(View.INVISIBLE);
 
@@ -319,6 +326,19 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 } else {
                     //stopRecord();
                     link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
+                }
+            }
+        });
+
+        onoffBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //startRecord();
+                    flag2 = true;
+                } else {
+                    //stopRecord();
+                    flag2 = false;
                 }
             }
         });
@@ -577,10 +597,17 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         @Override
         public void run() {
             while (true) {
+                //if(flag2)
                 casVideoSurface();
 
                 if(flag1)
                 receive();
+
+                try {
+                    Thread.sleep(5);
+                } catch (Exception e){
+
+                }
             }
         }
     }

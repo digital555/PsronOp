@@ -92,6 +92,15 @@
             android:layout_weight="1"
             android:text="Video MCD" />
 
+        <ToggleButton
+            android:id="@+id/btn_onoff"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="on/off"
+            android:textOff="off"
+            android:textOn="on" />
+
         <Button
             android:id="@+id/btn_ip"
             android:layout_width="0dp"
@@ -122,9 +131,9 @@
         android:layout_marginTop="53dp"
         android:ems="10"
         android:inputType="text"
-        android:text="ip to send video"
+        android:text="10.3.2.196"
         android:textAlignment="center"
         android:visibility="visible"
-        tools:text="ip to send video" />
+        tools:text="10.3.2.196" />
 
 </RelativeLayout>

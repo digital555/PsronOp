@@ -56,8 +56,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     protected DJICodecManager mCodecManager = null;
 
     protected TextureView mVideoSurface = null;
-    private Button mCaptureBtn, mShootPhotoModeBtn, mRecordVideoModeBtn, mIpBtn;
-    private ToggleButton mRecordBtn, onoffBtn;
+    private Button mMapaBtn, mLbVideo, mVideoMcdBtn, mIpBtn;
+    private ToggleButton mModeBtn, onoffBtn;
     private TextView recordingTime;
     private ImageView mImageViewMCD;
     private ImageView mImageViewLay;
@@ -297,10 +297,10 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         mVideoSurface = (TextureView)findViewById(R.id.video_previewer_surface);
 
         recordingTime = (TextView) findViewById(R.id.timer);
-        mCaptureBtn = (Button) findViewById(R.id.btn_capture);
-        mRecordBtn = (ToggleButton) findViewById(R.id.btn_record);
-        mShootPhotoModeBtn = (Button) findViewById(R.id.btn_shoot_photo_mode);
-        mRecordVideoModeBtn = (Button) findViewById(R.id.btn_record_video_mode);
+        mMapaBtn = (Button) findViewById(R.id.btn_mapa);
+        mModeBtn = (ToggleButton) findViewById(R.id.btn_mode);
+        mLbVideo = (Button) findViewById(R.id.btn_lb_video);
+        mVideoMcdBtn = (Button) findViewById(R.id.btn_video_mcd);
         mIpBtn = (Button) findViewById(R.id.btn_ip);
         mImageViewMCD = (ImageView) findViewById(R.id.imageViewMCD);
         mImageViewMCD.setImageResource(R.drawable.btn_draw_end);
@@ -316,16 +316,16 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
             mVideoSurface.setSurfaceTextureListener(this);
         }
 
-        mCaptureBtn.setOnClickListener(this);
-        mRecordBtn.setOnClickListener(this);
-        mShootPhotoModeBtn.setOnClickListener(this);
-        mRecordVideoModeBtn.setOnClickListener(this);
+        mMapaBtn.setOnClickListener(this);
+        mModeBtn.setOnClickListener(this);
+        mLbVideo.setOnClickListener(this);
+        mVideoMcdBtn.setOnClickListener(this);
         mIpBtn.setOnClickListener(this);
         onoffBtn.setOnClickListener(this);
 
         recordingTime.setVisibility(View.INVISIBLE);
 
-        mRecordBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mModeBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -421,7 +421,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.btn_capture:{
+            case R.id.btn_mapa:{
                 //captureAction();
                 myWebView.setVisibility(View.VISIBLE);
                 mImageViewMCD.setVisibility(View.INVISIBLE);
@@ -429,7 +429,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 flag1 = false;
                 break;
             }
-            case R.id.btn_shoot_photo_mode:{
+            case R.id.btn_lb_video:{
                 //switchCameraMode(SettingsDefinitions.CameraMode.SHOOT_PHOTO);
                 //mVideoSurface.setVisibility(View.VISIBLE);
                 mImageViewMCD.setVisibility(View.INVISIBLE);
@@ -439,7 +439,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 //link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
                 break;
             }
-            case R.id.btn_record_video_mode:{
+            case R.id.btn_video_mcd:{
                 //switchCameraMode(SettingsDefinitions.CameraMode.RECORD_VIDEO);
                 //mVideoSurface.setVisibility(View.INVISIBLE);
                 mImageViewMCD.setVisibility(View.VISIBLE);

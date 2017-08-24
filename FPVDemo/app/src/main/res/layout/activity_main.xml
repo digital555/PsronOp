@@ -55,7 +55,7 @@
             app:srcCompat="@color/colorAccent" />
 
         <Button
-            android:id="@+id/btn_capture"
+            android:id="@+id/btn_mapa"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -64,7 +64,7 @@
             android:textSize="12sp" />
 
         <ToggleButton
-            android:id="@+id/btn_record"
+            android:id="@+id/btn_mode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -76,7 +76,7 @@
             android:textSize="12dp" />
 
         <Button
-            android:id="@+id/btn_shoot_photo_mode"
+            android:id="@+id/btn_lb_video"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -85,7 +85,7 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/btn_record_video_mode"
+            android:id="@+id/btn_video_mcd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

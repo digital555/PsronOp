@@ -68,7 +68,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     private Handler handler;
 
-    public DatagramSocket mDataGramSocketReceive;
+    public DatagramSocket mDataGramSocketReceive1;
+    public DatagramSocket mDataGramSocketReceive2;
     public DatagramSocket mDataGramSocketSend;
     InetAddress addr;
 
@@ -82,7 +83,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     public Bitmap bmpFromMcd;
     public Bitmap bmpToMcd;
-    public byte[] frameFromMcd = new byte[60000];
+    public byte[] frameFrom = new byte[60000];
     public byte[] frameToMcd = new byte[60000];
 
     String[] DogGPS = new String[10];
@@ -110,9 +111,12 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         handler = new Handler();
 
         try {
-            mDataGramSocketReceive = new DatagramSocket(11004);
-            mDataGramSocketReceive.setReuseAddress(true);
-            mDataGramSocketReceive.setSoTimeout(1500);
+            mDataGramSocketReceive1 = new DatagramSocket(11004);
+            mDataGramSocketReceive1.setReuseAddress(true);
+            mDataGramSocketReceive1.setSoTimeout(1500);
+            mDataGramSocketReceive2 = new DatagramSocket(11005);
+            mDataGramSocketReceive2.setReuseAddress(true);
+            mDataGramSocketReceive2.setSoTimeout(1500);
             mDataGramSocketSend = new DatagramSocket();
         } catch (SocketException e) {
             showToast(e.toString() + " " + "sockets");
@@ -200,23 +204,27 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         try {
             if (flag1) {
                         //String text;
-                        DatagramPacket p = new DatagramPacket(frameFromMcd, frameFromMcd.length);
+                        DatagramPacket p = new DatagramPacket(frameFrom, frameFrom.length);
                         try {
                             //while (true) {  // && counter < 100 TODO
                             // send to server omitted
-                            try {
-                                mDataGramSocketReceive.receive(p);
-                                /*bmpFromMcd = BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length);
+                            try {                                
+                                if (flag2){
+                                    mDataGramSocketReceive1.receive(p);
+                                } else {
+                                    mDataGramSocketReceive2.receive(p);
+                                }
+                                /*bmpFromMcd = BitmapFactory.decodeByteArray(frameFrom, 0, frameFrom.length);
                                 mImageViewMCD.setImageBitmap(bmpFromMcd);*/
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        mImageViewMCD.setImageBitmap(BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length));
+                                        mImageViewMCD.setImageBitmap(BitmapFactory.decodeByteArray(frameFrom, 0, frameFrom.length));
                                     }
                                 });
                                 //text = new String(message, 0, p.getLength());
                                 // If you're not using an infinite loop:
-                                //mDataGramSocketReceive.close();
+                                //mDataGramSocketReceive1.close();
                                 //showToast(text);
                             } catch (SocketTimeoutException | NullPointerException e) {
                                 // no response received after 1 second. continue sending

@@ -48,7 +48,7 @@
 
         <ImageView
             android:id="@+id/dog_pose"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
@@ -131,9 +131,9 @@
         android:layout_marginTop="53dp"
         android:ems="10"
         android:inputType="text"
-        android:text="10.3.2.196"
+        android:text="10.3.2.133"
         android:textAlignment="center"
         android:visibility="visible"
-        tools:text="10.3.2.196" />
+        tools:text="10.3.2.133" />
 
 </RelativeLayout>

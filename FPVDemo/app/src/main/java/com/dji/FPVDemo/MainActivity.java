@@ -31,10 +31,12 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 
 import dji.common.camera.SettingsDefinitions;
 import dji.common.camera.SystemState;
 import dji.common.error.DJIError;
+import dji.common.flightcontroller.LocationCoordinate3D;
 import dji.common.product.Model;
 import dji.common.util.CommonCallbacks;
 import dji.sdk.airlink.LightbridgeLink;
@@ -70,6 +72,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     public DatagramSocket mDataGramSocketSend;
     InetAddress addr;
 
+    private final int SERVER_PORT = 1234; //Define the server port
+    static CTrollSocket trollSocket = new CTrollSocket();
+    static Semaphore sema = new Semaphore(1);
+    public byte[] dataMichal= new byte[10];
+
     boolean flag1 = false;
     boolean flag2 = false;
 
@@ -78,11 +85,15 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     public byte[] frameFromMcd = new byte[60000];
     public byte[] frameToMcd = new byte[60000];
 
-    String[] DogGPS;
-    String[] DogIMU;
+    String[] DogGPS = new String[10];
+    String[] DogIMU = new String[10];
 
     private LightbridgeLink link;
     private Thread Thread1;
+
+    private LocationCoordinate3D Coords;
+
+    //static CTrollBTsimple TrollBT = new CTrollBTsimple();
 
 
     @Override
@@ -101,7 +112,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         try {
             mDataGramSocketReceive = new DatagramSocket(11004);
             mDataGramSocketReceive.setReuseAddress(true);
-            mDataGramSocketReceive.setSoTimeout(1000);
+            mDataGramSocketReceive.setSoTimeout(1500);
             mDataGramSocketSend = new DatagramSocket();
         } catch (SocketException e) {
             showToast(e.toString() + " " + "sockets");
@@ -109,6 +120,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
 
         initUI();
+
+        trollSocket.Create(SERVER_PORT);
+        showToast(trollSocket.dataString);
 
         myWebView = (WebView) findViewById(R.id.webWiebView);
         WebSettings webSettings = myWebView.getSettings();
@@ -184,28 +198,22 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     public void receive() {
 
         try {
-
             if (flag1) {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
                         //String text;
                         DatagramPacket p = new DatagramPacket(frameFromMcd, frameFromMcd.length);
-
                         try {
-
                             //while (true) {  // && counter < 100 TODO
                             // send to server omitted
                             try {
                                 mDataGramSocketReceive.receive(p);
-
                                 /*bmpFromMcd = BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length);
                                 mImageViewMCD.setImageBitmap(bmpFromMcd);*/
-                                
-                                mImageViewMCD.setImageBitmap(BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length));
-
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mImageViewMCD.setImageBitmap(BitmapFactory.decodeByteArray(frameFromMcd, 0, frameFromMcd.length));
+                                    }
+                                });
                                 //text = new String(message, 0, p.getLength());
                                 // If you're not using an infinite loop:
                                 //mDataGramSocketReceive.close();
@@ -221,20 +229,20 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                             //mReceiveTask.publish("error:" + e.getMessage());
                         }
                         // return "out";
-                    }
-                });
             }
         } catch (Exception e){
             showToast(e.toString() + " " + "recieve1");
         }
     }
 
+
+
     public void casVideoSurface(){
         bmpToMcd = Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 960,
                 540, false) ;
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 15, outputStream);
+        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 10, outputStream);
         frameToMcd = outputStream.toByteArray();
         try {
             addr = InetAddress.getByName(editTextip.getText().toString());
@@ -323,9 +331,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 if (isChecked) {
                     //startRecord();
                     link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
+                    setmDogPose("IMU a b c 150");
                 } else {
                     //stopRecord();
                     link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
+                    setmDogPose("IMU a b c 200");
                 }
             }
         });
@@ -438,13 +448,14 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 myWebView.setVisibility(View.INVISIBLE);
                 flag1 = true;
                 //link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
-                /*try {
+                try {
+                    /*TrollBT.StartBluetooth("Serial");
                     Timer timer1 = new Timer();
                     MyTimerTask timer1_task = new MyTimerTask();
-                    timer1.schedule(timer1_task, 25, 250);
+                    timer1.schedule(timer1_task, 2000, 2000);*/
                 } catch (Exception e) {
                     showToast(e.toString() + " " + "timery");
-                }*/
+                }
 
                 Thread1 = new Thread(new MyRun());
                 Thread1.start();
@@ -552,23 +563,28 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     public void setmDogPose(String Dog ){
 
-        if (Dog.substring(0, 3) == "GPS")
+        DogIMU = Dog.split(" ");
+
+        if (Dog.substring(0, 3).equals("GPS"))
         {
+            showToast("GPSIF");
             // 3 i 4 to szerokosc i dlugosc
-            DogGPS = Dog.split("\t");
+            DogGPS = Dog.split(" ");
 
             /*if (DogGPS.length > 4);
                 SqlConn(DogGPS[3], DogGPS[4]);*/
         }
 
-        if (Dog.substring(0, 3) == "IMU")
+        if (Dog.substring(0, 3).equals("IMU"))
         {
-            DogIMU = Dog.split("\t");
+
+            DogIMU = Dog.split(" ");
+
             if (DogIMU.length > 3)
             {
-                int pieseueue = Integer.parseInt(DogIMU[3].substring(0, 3));
+                int pieseueue = Integer.parseInt(DogIMU[4]);
 
-                if (pieseueue > 185 | pieseueue < 165)
+                if (pieseueue > 185)
                 {
                     mDogPose.setImageResource(R.drawable.siedzi);
                 }
@@ -583,14 +599,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
 
 
-    class MyTimerTask extends TimerTask
+    /*class MyTimerTask extends TimerTask
     {
         public void run()
         {
-            casVideoSurface();
-            receive();
+            showToast(TrollBT.mMessageBT);
         }
-    }
+    }*/
 
     public class MyRun implements Runnable {
 
@@ -604,7 +619,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 receive();
 
                 try {
-                    Thread.sleep(5);
+                    //Thread.sleep(5);
                 } catch (Exception e){
 
                 }

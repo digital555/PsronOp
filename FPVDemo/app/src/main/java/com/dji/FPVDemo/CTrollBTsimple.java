@@ -41,6 +41,8 @@ public class CTrollBTsimple {
 
     public String mDeviceName = "unknown";
     public String mMessageString = "BT";
+    public String mMessageBT = "BT";
+
 
     private Lock mDataLock = new Lock() {
         @Override
@@ -273,6 +275,10 @@ public class CTrollBTsimple {
 
                             mAllDataBuffer[mBufferSize] = mBuffer[i];
                             mBufferSize++;
+                            if(mBuffer[i] == '\n'){
+                                mMessageBT = composeString2(mAllDataBuffer, mBufferSize);
+                                mBufferSize = 0;
+                            }
                             if (mBufferSize >= mMaxBuffer)
                                 mBufferSize = 0;
                         }

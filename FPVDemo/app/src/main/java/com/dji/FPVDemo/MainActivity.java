@@ -7,6 +7,11 @@ import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.annotation.FloatRange;
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.Size;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
@@ -36,7 +41,18 @@ import java.util.concurrent.Semaphore;
 import dji.common.camera.SettingsDefinitions;
 import dji.common.camera.SystemState;
 import dji.common.error.DJIError;
+import dji.common.flightcontroller.ConnectionFailSafeBehavior;
+import dji.common.flightcontroller.ControlGimbalBehavior;
+import dji.common.flightcontroller.ControlMode;
+import dji.common.flightcontroller.FlightControllerState;
+import dji.common.flightcontroller.FlightOrientationMode;
+import dji.common.flightcontroller.IOStateOnBoard;
 import dji.common.flightcontroller.LocationCoordinate3D;
+import dji.common.flightcontroller.PowerStateOnBoard;
+import dji.common.flightcontroller.RCSwitchFlightMode;
+import dji.common.flightcontroller.imu.IMUState;
+import dji.common.flightcontroller.virtualstick.FlightControlData;
+import dji.common.model.LocationCoordinate2D;
 import dji.common.product.Model;
 import dji.common.util.CommonCallbacks;
 import dji.sdk.airlink.LightbridgeLink;
@@ -44,6 +60,10 @@ import dji.sdk.base.BaseProduct;
 import dji.sdk.camera.Camera;
 import dji.sdk.camera.VideoFeeder;
 import dji.sdk.codec.DJICodecManager;
+import dji.sdk.flightcontroller.FlightController;
+import dji.sdk.products.Aircraft;
+import dji.sdk.sdkmanager.DJISDKManager;
+
 
 import static java.lang.System.out;
 
@@ -68,9 +88,12 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     private Handler handler;
 
-    public DatagramSocket mDataGramSocketReceive1;
-    public DatagramSocket mDataGramSocketReceive2;
-    public DatagramSocket mDataGramSocketSend;
+    public DatagramSocket mDataGramSocketReceiveVideo1;
+    public DatagramSocket mDataGramSocketReceiveVideo2;
+    public DatagramSocket mDataGramSocketReceiveIMUData;
+
+    public DatagramSocket mDataGramSocketSendLbVideo;
+    public DatagramSocket mDataGramSocketSendGPSData;
     InetAddress addr;
 
     private final int SERVER_PORT = 1234; //Define the server port
@@ -85,6 +108,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     public Bitmap bmpToMcd;
     public byte[] frameFrom = new byte[60000];
     public byte[] frameToMcd = new byte[60000];
+    public byte[] GPSBatch = new byte[60000];
+    public byte[] IMUBatch = new byte[60000];
 
     String[] DogGPS = new String[10];
     String[] DogIMU = new String[10];
@@ -92,7 +117,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     private LightbridgeLink link;
     private Thread Thread1;
 
-    private LocationCoordinate3D Coords;
+    private FlightController mFlightController;
+
+    private double droneLocationLat = 181, droneLocationLng = 181;
 
     //static CTrollBTsimple TrollBT = new CTrollBTsimple();
 
@@ -111,13 +138,17 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         handler = new Handler();
 
         try {
-            mDataGramSocketReceive1 = new DatagramSocket(11004);
-            mDataGramSocketReceive1.setReuseAddress(true);
-            mDataGramSocketReceive1.setSoTimeout(1500);
-            mDataGramSocketReceive2 = new DatagramSocket(11005);
-            mDataGramSocketReceive2.setReuseAddress(true);
-            mDataGramSocketReceive2.setSoTimeout(1500);
-            mDataGramSocketSend = new DatagramSocket();
+            mDataGramSocketReceiveVideo1 = new DatagramSocket(11004);
+            mDataGramSocketReceiveVideo1.setReuseAddress(true);
+            mDataGramSocketReceiveVideo1.setSoTimeout(1500);
+            mDataGramSocketReceiveVideo2 = new DatagramSocket(11005);
+            mDataGramSocketReceiveVideo2.setReuseAddress(true);
+            mDataGramSocketReceiveVideo2.setSoTimeout(1500);
+            mDataGramSocketReceiveIMUData = new DatagramSocket(11007);
+            mDataGramSocketReceiveIMUData.setReuseAddress(true);
+            mDataGramSocketReceiveIMUData.setSoTimeout(1500);
+            mDataGramSocketSendLbVideo = new DatagramSocket();
+            mDataGramSocketSendGPSData = new DatagramSocket();
         } catch (SocketException e) {
             showToast(e.toString() + " " + "sockets");
         }
@@ -191,7 +222,34 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 return true;
             }
         };
+    }
 
+
+    private void initFlightController() {
+        BaseProduct product = FPVDemoApplication.getProductInstance();
+        if (product != null && product.isConnected()) {
+            if (product instanceof Aircraft) {
+                mFlightController = ((Aircraft) product).getFlightController();
+            }
+        }
+        if (mFlightController != null) {
+            mFlightController.setStateCallback(
+                    new FlightControllerState.Callback() {
+                        @Override
+                        public void onUpdate(FlightControllerState djiFlightControllerCurrentState) {
+                            try {
+                                droneLocationLat = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
+                                droneLocationLng = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
+                                sendGPSData(droneLocationLat, droneLocationLng);
+                                showToast(String.valueOf(droneLocationLat) + " ; " + String.valueOf(droneLocationLng));
+
+                                //updateDroneLocation();
+                            } catch (Exception e){
+                                showToast(e.toString());
+                            }
+                        }
+                    });
+        }
     }
 
     protected void onProductChange() {
@@ -208,11 +266,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                         try {
                             //while (true) {  // && counter < 100 TODO
                             // send to server omitted
-                            try {                                
+                            try {
                                 if (flag2){
-                                    mDataGramSocketReceive1.receive(p);
+                                    mDataGramSocketReceiveVideo1.receive(p);
                                 } else {
-                                    mDataGramSocketReceive2.receive(p);
+                                    mDataGramSocketReceiveVideo2.receive(p);
                                 }
                                 /*bmpFromMcd = BitmapFactory.decodeByteArray(frameFrom, 0, frameFrom.length);
                                 mImageViewMCD.setImageBitmap(bmpFromMcd);*/
@@ -224,7 +282,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                                 });
                                 //text = new String(message, 0, p.getLength());
                                 // If you're not using an infinite loop:
-                                //mDataGramSocketReceive1.close();
+                                //mDataGramSocketReceiveVideo1.close();
                                 //showToast(text);
                             } catch (SocketTimeoutException | NullPointerException e) {
                                 // no response received after 1 second. continue sending
@@ -255,12 +313,33 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         try {
             addr = InetAddress.getByName(editTextip.getText().toString());
             DatagramPacket p = new DatagramPacket(frameToMcd, frameToMcd.length,addr,11000);
-            mDataGramSocketSend.send(p);
+            mDataGramSocketSendLbVideo.send(p);
         } catch (Exception e){
             showToast(e.toString() + " " + "casVideoSurface");
         }
+    }
 
 
+    public void sendGPSData (double lat, double lng){
+
+        GPSBatch = (lat + " " + lng).getBytes();
+
+        try {
+            DatagramPacket p = new DatagramPacket(GPSBatch, GPSBatch.length,addr,11006);
+            mDataGramSocketSendGPSData.send(p);
+        } catch (Exception e){
+            showToast(e.toString() + " " + "sendGPSData");
+        }
+    }
+
+    public void receiveIMUData(){
+        try {
+            DatagramPacket p = new DatagramPacket(IMUBatch, IMUBatch.length);
+            mDataGramSocketReceiveIMUData.receive(p);
+            setmDogPose(IMUBatch.toString());
+        } catch (Exception e){
+            showToast(e.toString() + " " + "receiveIMUData");
+        }
     }
 
     @Override
@@ -430,6 +509,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
         switch (v.getId()) {
             case R.id.btn_mapa:{
+                initFlightController();
                 //captureAction();
                 myWebView.setVisibility(View.VISIBLE);
                 mImageViewMCD.setVisibility(View.INVISIBLE);
@@ -621,16 +701,34 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         public void run() {
             while (true) {
                 //if(flag2)
-                casVideoSurface();
 
                 if(flag1)
                 receive();
+
+                try {
+
+                } catch (Exception e){
+                    showToast(e.toString());
+                }
+
+                try {
+                    casVideoSurface();
+                } catch (Exception e){
+                    showToast(e.toString());
+                }
+
+                try {
+                    //receiveIMUData();
+                } catch (Exception e) {
+                    showToast(e.toString());
+                }
 
                 try {
                     //Thread.sleep(5);
                 } catch (Exception e){
 
                 }
+
             }
         }
     }

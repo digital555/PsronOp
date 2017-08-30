@@ -336,7 +336,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         try {
             DatagramPacket p = new DatagramPacket(IMUBatch, IMUBatch.length);
             mDataGramSocketReceiveIMUData.receive(p);
-            setmDogPose(IMUBatch.toString());
+            setmDogPose(new String(IMUBatch, "US-ASCII"));
         } catch (Exception e){
             showToast(e.toString() + " " + "receiveIMUData");
         }
@@ -651,13 +651,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
     public void setmDogPose(String Dog ){
 
-        DogIMU = Dog.split(" ");
+        showToast(Dog + "setmDogPose");
 
         if (Dog.substring(0, 3).equals("GPS"))
         {
             showToast("GPSIF");
             // 3 i 4 to szerokosc i dlugosc
-            DogGPS = Dog.split(" ");
+            DogGPS = Dog.split("\t");
 
             /*if (DogGPS.length > 4);
                 SqlConn(DogGPS[3], DogGPS[4]);*/
@@ -665,14 +665,17 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
         if (Dog.substring(0, 3).equals("IMU"))
         {
+            DogIMU = Dog.split("\t");
 
-            DogIMU = Dog.split(" ");
-
-            if (DogIMU.length > 3)
+            if (DogIMU.length > 2)
             {
-                int pieseueue = Integer.parseInt(DogIMU[4]);
+                showToast(DogIMU[3]);
+                int pieseueue = Integer.parseInt(DogIMU[3]);
 
-                if (pieseueue > 185)
+
+                //showToast(DogIMU[0] + " " + DogIMU[1]);
+
+                if (pieseueue > 40)
                 {
                     mDogPose.setImageResource(R.drawable.siedzi);
                 }
@@ -706,19 +709,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 receive();
 
                 try {
-
-                } catch (Exception e){
-                    showToast(e.toString());
-                }
-
-                try {
                     casVideoSurface();
                 } catch (Exception e){
                     showToast(e.toString());
                 }
 
                 try {
-                    //receiveIMUData();
+                    receiveIMUData();
                 } catch (Exception e) {
                     showToast(e.toString());
                 }

@@ -39,6 +39,12 @@
         android:layout_centerHorizontal="true"
         app:srcCompat="@color/colorPrimaryDark" />
 
+    <WebView
+        android:id="@+id/BGview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

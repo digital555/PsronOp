@@ -82,6 +82,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     private ImageView mImageViewMCD;
     private ImageView mImageViewLay;
     private WebView myWebView;
+    private WebView backgroudWebview;
     private ImageView mDogPose;
 
     private EditText editTextip;
@@ -160,9 +161,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         showToast(trollSocket.dataString);
 
         myWebView = (WebView) findViewById(R.id.webWiebView);
-        WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        backgroudWebview = (WebView) findViewById(R.id.BGview);
+        WebSettings webSettings1 = myWebView.getSettings();
+        WebSettings webSettings2 = backgroudWebview.getSettings();
+        webSettings1.setJavaScriptEnabled(true);
+        webSettings2.setJavaScriptEnabled(true);
         myWebView.setWebViewClient(new WebViewClient());
+        backgroudWebview.setWebViewClient(new WebViewClient());
         myWebView.loadUrl("http://cyberdog.herokuapp.com/operation_map");
 
         // The callback for receiving the raw H264 video data for camera live view
@@ -242,6 +247,14 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                                 droneLocationLng = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
                                 sendGPSData(droneLocationLat, droneLocationLng);
                                 showToast(String.valueOf(droneLocationLat) + " ; " + String.valueOf(droneLocationLng));
+
+                                backgroudWebview.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+droneLocationLat+"&longitude="+droneLocationLng+"&drone_id=17");
+                                    }
+                                });
+
 
                                 //updateDroneLocation();
                             } catch (Exception e){
@@ -715,7 +728,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 }
 
                 try {
-                    receiveIMUData();
+                    //receiveIMUData();
                 } catch (Exception e) {
                     showToast(e.toString());
                 }

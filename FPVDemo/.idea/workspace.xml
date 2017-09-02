@@ -43,8 +43,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="308" column="54" selection-start-line="308" selection-start-column="54" selection-end-line="308" selection-end-column="54" />
+            <state relative-caret-position="272">
+              <caret line="98" column="54" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#8546#8707#0" expanded="true" />
@@ -53,6 +53,8 @@
                 <element signature="e#12285#12672#0" expanded="true" />
                 <element signature="e#12671#12672#0" expanded="true" />
                 <element signature="e#12918#12919#0" expanded="true" />
+                <element signature="e#18897#19658#0" expanded="true" />
+                <element signature="e#19657#19658#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2974,7 +2976,7 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../CyberDogGui" />
     <property name="show.do.not.ask.upgrade.gradle.plugin.version" value="2.1.0" />
-    <property name="device.picker.selection" value="03157df36959b410" />
+    <property name="device.picker.selection" value="Nexus_5_API_24" />
     <property name="show.do.not.ask.upgrade.gradle.plugin" value="2.1.0" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/java" />
   </component>
@@ -3313,7 +3315,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.4978678" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13125695" sideWeight="0.49573562" order="12" side_tool="false" content_ui="tabs" />
@@ -3412,6 +3414,8 @@
             <element signature="e#12285#12672#0" expanded="true" />
             <element signature="e#12671#12672#0" expanded="true" />
             <element signature="e#12918#12919#0" expanded="true" />
+            <element signature="e#18897#19658#0" expanded="true" />
+            <element signature="e#19657#19658#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3476,6 +3480,8 @@
             <element signature="e#12285#12672#0" expanded="true" />
             <element signature="e#12671#12672#0" expanded="true" />
             <element signature="e#12918#12919#0" expanded="true" />
+            <element signature="e#18897#19658#0" expanded="true" />
+            <element signature="e#19657#19658#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3540,6 +3546,8 @@
             <element signature="e#12285#12672#0" expanded="true" />
             <element signature="e#12671#12672#0" expanded="true" />
             <element signature="e#12918#12919#0" expanded="true" />
+            <element signature="e#18897#19658#0" expanded="true" />
+            <element signature="e#19657#19658#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3788,8 +3796,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="308" column="54" selection-start-line="308" selection-start-column="54" selection-end-line="308" selection-end-column="54" />
+        <state relative-caret-position="272">
+          <caret line="98" column="54" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#8546#8707#0" expanded="true" />
@@ -3798,6 +3806,8 @@
             <element signature="e#12285#12672#0" expanded="true" />
             <element signature="e#12671#12672#0" expanded="true" />
             <element signature="e#12918#12919#0" expanded="true" />
+            <element signature="e#18897#19658#0" expanded="true" />
+            <element signature="e#19657#19658#0" expanded="true" />
           </folding>
         </state>
       </provider>

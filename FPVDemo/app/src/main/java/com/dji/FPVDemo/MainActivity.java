@@ -383,7 +383,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
         frameToMcd = outputStream.toByteArray();
         try {
             addr = InetAddress.getByName(editTextip.getText().toString());
-            DatagramPacket p = new DatagramPacket(frameToMcd, frameToMcd.length,addr,11000);
+            DatagramPacket p = new DatagramPacket(frameToMcd, frameToMcd.length,addr,11009);
             mDataGramSocketSendLbVideo.send(p);
         } catch (Exception e){
             showToast(e.toString() + " " + "casVideoSurface");
@@ -488,11 +488,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    //startRecord();
+                    //startRecord()
+                    showToast(String.valueOf(link.isSecondaryVideoOutputSupported()));
                     link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
                     setmDogPose("IMU a b c 150");
                 } else {
                     //stopRecord();
+                    showToast(String.valueOf(link.isSecondaryVideoOutputSupported()));
                     link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
                     setmDogPose("IMU a b c 200");
                 }

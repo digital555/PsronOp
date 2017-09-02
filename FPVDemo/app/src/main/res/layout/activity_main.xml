@@ -104,8 +104,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="on/off"
-            android:textOff="off"
-            android:textOn="on" />
+            android:textOff="2"
+            android:textOn="1" />
 
         <Button
             android:id="@+id/btn_ip"

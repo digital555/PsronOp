@@ -1,9 +1,15 @@
 package com.dji.FPVDemo;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.SurfaceTexture;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -12,6 +18,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
@@ -67,7 +74,7 @@ import dji.sdk.sdkmanager.DJISDKManager;
 
 import static java.lang.System.out;
 
-public class MainActivity extends Activity implements SurfaceTextureListener,OnClickListener{
+public class MainActivity extends Activity implements SurfaceTextureListener, OnClickListener {
 
     private static final String TAG = MainActivity.class.getName();
     protected VideoFeeder.VideoDataCallback mReceivedVideoDataCallBack = null;
@@ -100,7 +107,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     private final int SERVER_PORT = 1234; //Define the server port
     static CTrollSocket trollSocket = new CTrollSocket();
     static Semaphore sema = new Semaphore(1);
-    public byte[] dataMichal= new byte[10];
+    public byte[] dataMichal = new byte[10];
 
     boolean flag1 = false;
     boolean flag2 = false;
@@ -121,6 +128,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
     private FlightController mFlightController;
 
     private double droneLocationLat = 181, droneLocationLng = 181;
+    private String strLat = "", strLng = "";
 
     //static CTrollBTsimple TrollBT = new CTrollBTsimple();
 
@@ -207,10 +215,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                                 /*
                                  * Update recordingTime TextView visibility and mRecordBtn's check state
                                  */
-                                if (isVideoRecording){
+                                if (isVideoRecording) {
                                     recordingTime.setVisibility(View.VISIBLE);
-                                }else
-                                {
+                                } else {
                                     recordingTime.setVisibility(View.INVISIBLE);
                                 }
                             }
@@ -227,6 +234,57 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
                 return true;
             }
         };
+
+        LocationManager mLocationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        LocationListener mLocationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                location.getLatitude();
+                location.getLongitude();
+
+                showToast(String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
+
+                strLat = String.valueOf(location.getLatitude());
+                strLng = String.valueOf(location.getLongitude());
+
+                backgroudWebview.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+strLat+"&longitude="+strLng+"&drone_id=17");
+                    }
+                });
+
+                sendGPSData(location.getLatitude(), location.getLongitude());
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                showToast(provider + " StatusChanged");
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                showToast(provider + " onProviderEnabled");
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                showToast(provider + " onProviderDisabled");
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
     }
 
 
@@ -338,7 +396,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
         GPSBatch = (lat + " " + lng).getBytes();
 
         try {
-            DatagramPacket p = new DatagramPacket(GPSBatch, GPSBatch.length,addr,11006);
+            addr = InetAddress.getByName(editTextip.getText().toString());
+            DatagramPacket p = new DatagramPacket(GPSBatch, GPSBatch.length,addr,11001);
             mDataGramSocketSendGPSData.send(p);
         } catch (Exception e){
             showToast(e.toString() + " " + "sendGPSData");
@@ -522,7 +581,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener,OnC
 
         switch (v.getId()) {
             case R.id.btn_mapa:{
-                initFlightController();
+                //initFlightController();
                 //captureAction();
                 myWebView.setVisibility(View.VISIBLE);
                 mImageViewMCD.setVisibility(View.INVISIBLE);

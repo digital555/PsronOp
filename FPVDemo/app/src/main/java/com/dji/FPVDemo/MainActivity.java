@@ -102,7 +102,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
     public DatagramSocket mDataGramSocketSendLbVideo;
     public DatagramSocket mDataGramSocketSendGPSData;
-    InetAddress addr;
+    public InetAddress addr;
 
     private final int SERVER_PORT = 1234; //Define the server port
     static CTrollSocket trollSocket = new CTrollSocket();
@@ -119,11 +119,15 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     public byte[] GPSBatch = new byte[60000];
     public byte[] IMUBatch = new byte[60000];
 
+    int lbVideoPortSend = 11000;
+
     String[] DogGPS = new String[10];
     String[] DogIMU = new String[10];
 
     private LightbridgeLink link;
     private Thread Thread1;
+    private Thread Thread2;
+    private Thread Thread3;
 
     private FlightController mFlightController;
 
@@ -131,6 +135,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     private String strLat = "", strLng = "";
 
     //static CTrollBTsimple TrollBT = new CTrollBTsimple();
+
+
+
 
 
     @Override
@@ -176,7 +183,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
         webSettings2.setJavaScriptEnabled(true);
         myWebView.setWebViewClient(new WebViewClient());
         backgroudWebview.setWebViewClient(new WebViewClient());
-        myWebView.loadUrl("http://cyberdog.herokuapp.com/operation_map");
+        myWebView.loadUrl("http://cyberdog.herokuapp.com/operation_map?is_menu=0");
 
         // The callback for receiving the raw H264 video data for camera live view
         mReceivedVideoDataCallBack = new VideoFeeder.VideoDataCallback() {
@@ -251,7 +258,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 backgroudWebview.post(new Runnable() {
                     @Override
                     public void run() {
-                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+strLat+"&longitude="+strLng+"&drone_id=17");
+                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+strLat+"&longitude="+strLng+"&dog_id=21");
                     }
                 });
 
@@ -309,7 +316,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                                 backgroudWebview.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+droneLocationLat+"&longitude="+droneLocationLng+"&drone_id=17");
+                                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+droneLocationLat+"&longitude="+droneLocationLng+"&drone_id=24");
                                     }
                                 });
 
@@ -334,11 +341,12 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
             if (flag1) {
                         //String text;
                         DatagramPacket p = new DatagramPacket(frameFrom, frameFrom.length);
+
                         try {
                             //while (true) {  // && counter < 100 TODO
                             // send to server omitted
                             try {
-                                if (flag2){
+                                if (!flag2){
                                     mDataGramSocketReceiveVideo1.receive(p);
                                 } else {
                                     mDataGramSocketReceiveVideo2.receive(p);
@@ -366,6 +374,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                             //mReceiveTask.publish("error:" + e.getMessage());
                         }
                         // return "out";
+
+
             }
         } catch (Exception e){
             showToast(e.toString() + " " + "recieve1");
@@ -375,15 +385,17 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
 
     public void casVideoSurface(){
-        bmpToMcd = Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 960,
-                540, false) ;
+        //bmpToMcd = Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 960, 540, false) ;
+
+
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bmpToMcd.compress(Bitmap.CompressFormat.JPEG, 10, outputStream);
+        Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 480,
+                270, false).compress(Bitmap.CompressFormat.JPEG, 10, outputStream);
         frameToMcd = outputStream.toByteArray();
         try {
             addr = InetAddress.getByName(editTextip.getText().toString());
-            DatagramPacket p = new DatagramPacket(frameToMcd, frameToMcd.length,addr,11009);
+            DatagramPacket p = new DatagramPacket(frameToMcd, frameToMcd.length,addr,lbVideoPortSend);
             mDataGramSocketSendLbVideo.send(p);
         } catch (Exception e){
             showToast(e.toString() + " " + "casVideoSurface");
@@ -529,6 +541,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 if (VideoFeeder.getInstance().getVideoFeeds() != null
                         && VideoFeeder.getInstance().getVideoFeeds().size() > 0) {
                     VideoFeeder.getInstance().getVideoFeeds().get(0).setCallback(mReceivedVideoDataCallBack);
+                    showToast("Video Feeder size: " + String.valueOf(VideoFeeder.getInstance().getVideoFeeds().size()));
                 }
             }
         }
@@ -619,8 +632,12 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                     showToast(e.toString() + " " + "timery");
                 }
 
-                Thread1 = new Thread(new MyRun());
+                Thread1 = new Thread(new MyRun1());
                 Thread1.start();
+                Thread2 = new Thread(new MyRun2());
+                Thread2.start();
+                Thread3 = new Thread(new MyRun3());
+                Thread3.start();
 
                 //receive();
                 break;
@@ -772,34 +789,72 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
         }
     }*/
 
-    public class MyRun implements Runnable {
+    public class MyRun1 implements Runnable {
 
         @Override
         public void run() {
             while (true) {
-                //if(flag2)
-
-                if(flag1)
-                receive();
 
                 try {
                     casVideoSurface();
                 } catch (Exception e){
-                    showToast(e.toString());
+                    showToast(e.toString() + "try casVideoSurface");
                 }
 
-                try {
-                    //receiveIMUData();
-                } catch (Exception e) {
-                    showToast(e.toString());
-                }
+                /*try {
+                    initFlightController();
+                } catch (Exception e){
+                    showToast(e.toString() + " try initFlightController");
+                }*/
 
                 try {
-                    //Thread.sleep(5);
+                    Thread.sleep(25);
                 } catch (Exception e){
 
                 }
 
+            }
+        }
+    }
+
+    public class MyRun2 implements Runnable {
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    receiveIMUData();
+                } catch (Exception e) {
+                    showToast(e.toString() + " try receiveIMU");
+                }
+
+                try {
+                    Thread.sleep(25);
+                } catch (Exception e){
+
+                }
+            }
+        }
+    }
+
+    public class MyRun3 implements Runnable {
+
+        @Override
+        public void run() {
+            while (true) {
+                if (flag1) {
+                    try {
+                        receive();
+                    } catch (Exception e) {
+                        showToast(e.toString() + " try receive");
+                    }
+                }
+
+                try {
+                    Thread.sleep(25);
+                } catch (Exception e){
+
+                }
             }
         }
     }

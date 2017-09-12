@@ -36,13 +36,13 @@
         android:id="@+id/btn_open"
         android:layout_width="150dp"
         android:layout_height="55dp"
+        android:layout_below="@+id/imageViewsg"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp"
         android:background="@drawable/round_btn"
-        android:text="Open"
+        android:text="Uruchom"
         android:textColor="@color/colorWhite"
-        android:textSize="20dp"
-        android:layout_below="@+id/imageViewsg"
-        android:layout_centerHorizontal="true" />
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="wrap_content"

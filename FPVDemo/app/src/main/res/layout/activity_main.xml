@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Video"
+            android:text="Video LB"
             android:textSize="12sp" />
 
         <Button
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Video MCD" />
+            android:text="V/D MCD" />
 
         <ToggleButton
             android:id="@+id/btn_onoff"
@@ -104,8 +104,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="on/off"
-            android:textOff="2"
-            android:textOn="1" />
+            android:textOff="Źr 2"
+            android:textOn="Źr 1" />
 
         <Button
             android:id="@+id/btn_ip"
@@ -137,9 +137,9 @@
         android:layout_marginTop="53dp"
         android:ems="10"
         android:inputType="text"
-        android:text="10.3.2.133"
+        android:text="192.168.1.100"
         android:textAlignment="center"
         android:visibility="visible"
-        tools:text="10.3.2.133" />
+        tools:text="192.168.1.100" />
 
 </RelativeLayout>

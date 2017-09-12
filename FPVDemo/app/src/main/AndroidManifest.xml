@@ -33,9 +33,10 @@
     <application
         android:name=".FPVDemoApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/stoi"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:label="CyberDogOpiekun">
 
         <!-- DJI SDK -->
         <uses-library android:name="com.android.future.usb.accessory" />

@@ -41,9 +41,14 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import dji.common.camera.SettingsDefinitions;
 import dji.common.camera.SystemState;
@@ -104,8 +109,13 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     public DatagramSocket mDataGramSocketSendGPSData;
     public InetAddress addr;
 
+    private OnMessageReceived mMessageListener = null;
+
+    private BufferedReader mBufferIn;
+
+
     private final int SERVER_PORT = 1234; //Define the server port
-    static CTrollSocket trollSocket = new CTrollSocket();
+    //static CTrollSocket trollSocket = new CTrollSocket();
     static Semaphore sema = new Semaphore(1);
     public byte[] dataMichal = new byte[10];
 
@@ -128,6 +138,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     private Thread Thread1;
     private Thread Thread2;
     private Thread Thread3;
+    private Thread Thread4;
 
     private FlightController mFlightController;
 
@@ -172,8 +183,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
         initUI();
 
-        trollSocket.Create(SERVER_PORT);
-        showToast(trollSocket.dataString);
+        /*trollSocket.Create(SERVER_PORT);
+        showToast(trollSocket.dataString);*/
 
         myWebView = (WebView) findViewById(R.id.webWiebView);
         backgroudWebview = (WebView) findViewById(R.id.BGview);
@@ -316,7 +327,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                                 backgroudWebview.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+droneLocationLat+"&longitude="+droneLocationLng+"&drone_id=24");
+                                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+String.valueOf(droneLocationLat)+"&longitude="+
+                                                String.valueOf(droneLocationLng)+"&drone_id=24");
                                     }
                                 });
 
@@ -382,13 +394,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
         }
     }
 
-
-
     public void casVideoSurface(){
         //bmpToMcd = Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 960, 540, false) ;
-
-
-
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 480,
                 270, false).compress(Bitmap.CompressFormat.JPEG, 10, outputStream);
@@ -460,6 +467,10 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     protected void onDestroy() {
         Log.e(TAG, "onDestroy");
         uninitPreviewer();
+        Thread1.stop();
+        Thread2.stop();
+        Thread3.stop();
+        Thread4.stop();
         super.onDestroy();
     }
 
@@ -611,6 +622,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 mImageViewLay.setVisibility(View.INVISIBLE);
                 myWebView.setVisibility(View.INVISIBLE);
                 flag1 = false;
+                Thread4 = new Thread(new casVideoSurfaceTCP());
+                Thread4.start();
                 //link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
                 break;
             }
@@ -636,7 +649,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 Thread1.start();
                 Thread2 = new Thread(new MyRun2());
                 Thread2.start();
-                Thread3 = new Thread(new MyRun3());
+                Thread3 = new Thread(new receiveTCP());
                 Thread3.start();
 
                 //receive();
@@ -801,11 +814,12 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                     showToast(e.toString() + "try casVideoSurface");
                 }
 
-                /*try {
-                    initFlightController();
+                try {
+                    //initFlightController();
+
                 } catch (Exception e){
                     showToast(e.toString() + " try initFlightController");
-                }*/
+                }
 
                 try {
                     Thread.sleep(25);
@@ -823,7 +837,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
         public void run() {
             while (true) {
                 try {
-                    receiveIMUData();
+                    //receiveIMUData();
+                    //receive();
                 } catch (Exception e) {
                     showToast(e.toString() + " try receiveIMU");
                 }
@@ -837,25 +852,115 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
         }
     }
 
-    public class MyRun3 implements Runnable {
+    public class receiveTCP implements Runnable {
 
         @Override
         public void run() {
-            while (true) {
-                if (flag1) {
-                    try {
-                        receive();
-                    } catch (Exception e) {
-                        showToast(e.toString() + " try receive");
-                    }
-                }
+            try {
+                System.out.println("S: Connecting...");
+
+                //create a server socket. A server socket waits for requests to come in over the network.
+                //ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+                Socket socket1 = new Socket(editTextip.getText().toString(), SERVER_PORT);
+
+                //create client socket... the method accept() listens for a connection to be made to this socket and accepts it.
+                //Socket client = serverSocket.accept();
+                System.out.println("S: Receiving...");
 
                 try {
-                    Thread.sleep(25);
-                } catch (Exception e){
 
+                    //sends the message to the client
+                    //PrintStream out = new PrintStream(socket1.getOutputStream(), true);
+
+                    //read the message received from client
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket1.getInputStream()));
+
+                    //in this while we wait to receive messages from client (it's an infinite loop)
+                    //this while it's like a listener for messages
+                    while (true) {
+                        frameFrom = in.readLine().getBytes();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mImageViewMCD.setImageBitmap(BitmapFactory.decodeByteArray(frameFrom, 0, frameFrom.length));
+                            }
+                        });
+                        showToast(String.valueOf("TCP message length " + frameFrom.length));
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("S: Error");
+                    e.printStackTrace();
+                } finally {
+                    socket1.close();
+                    System.out.println("S: Done.");
                 }
+
+            } catch (Exception e) {
+                System.out.println("S: Error");
+                e.printStackTrace();
             }
         }
+    }
+
+    public class casVideoSurfaceTCP implements Runnable {
+        @Override
+        public void run() {
+            try {
+                System.out.println("S: Connecting...");
+
+                //create a server socket. A server socket waits for requests to come in over the network.
+                //ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+                Socket socket2 = new Socket(editTextip.getText().toString(), 23233);
+
+                //create client socket... the method accept() listens for a connection to be made to this socket and accepts it.
+                //Socket client = serverSocket.accept();
+                System.out.println("S: Receiving...");
+
+                try {
+
+                    //sends the message to the client
+                    PrintStream out = new PrintStream(socket2.getOutputStream(), true);
+
+                    //read the message received from client
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket2.getInputStream()));
+
+                    //in this while we wait to receive messages from client (it's an infinite loop)
+                    //this while it's like a listener for messages
+
+                    ByteBuffer bb = ByteBuffer.allocate(4);
+                    bb.order(ByteOrder.LITTLE_ENDIAN);
+                    while (true) {
+
+                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                        Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 480,
+                                270, false).compress(Bitmap.CompressFormat.JPEG, 10, outputStream);
+                        frameToMcd = outputStream.toByteArray();
+                        out.println(ByteBuffer.allocate(4).putInt(frameToMcd.length).array());
+                        out.println(frameToMcd);
+                        showToast(" " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[0] +
+                                " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[1] +
+                                " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[2] +
+                                " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[3]);
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("S: Error");
+                    e.printStackTrace();
+                } finally {
+                    socket2.close();
+                    System.out.println("S: Done.");
+                }
+
+            } catch (Exception e) {
+                System.out.println("S: Error");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public interface OnMessageReceived {
+        public void messageReceived(String message);
     }
 }

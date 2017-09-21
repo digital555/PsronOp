@@ -43,20 +43,18 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="955" column="35" selection-start-line="955" selection-start-column="35" selection-end-line="955" selection-end-column="35" />
+            <state relative-caret-position="275">
+              <caret line="965" column="69" selection-start-line="0" selection-start-column="0" selection-end-line="1010" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#8913#9074#0" expanded="true" />
-                <element signature="e#9073#9074#0" expanded="true" />
-                <element signature="e#26297#27342#0" expanded="true" />
-                <element signature="e#26511#27280#0" expanded="true" />
-                <element signature="e#26669#27222#0" expanded="true" />
-                <element signature="e#27221#27222#0" expanded="true" />
-                <element signature="e#27279#27280#0" expanded="true" />
-                <element signature="e#27341#27342#0" expanded="true" />
-                <element signature="e#32271#32554#0" expanded="true" />
-                <element signature="e#32553#32554#0" expanded="true" />
+                <element signature="e#12039#14320#0" expanded="true" />
+                <element signature="e#14319#14320#0" expanded="true" />
+                <element signature="e#14386#14387#0" expanded="true" />
+                <element signature="e#14417#14418#0" expanded="true" />
+                <element signature="e#15316#15639#0" expanded="true" />
+                <element signature="e#15638#15639#0" expanded="true" />
+                <element signature="e#33462#33745#0" expanded="true" />
+                <element signature="e#33744#33745#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,7 +63,7 @@
       <file leaf-file-name="FPVDemoApplication.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/FPVDemoApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1496">
+            <state relative-caret-position="515">
               <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
               <folding />
             </state>
@@ -85,7 +83,7 @@
       <file leaf-file-name="CTrollBTsimple.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollBTsimple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2969">
+            <state relative-caret-position="-1964">
               <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
@@ -95,8 +93,8 @@
       <file leaf-file-name="CTrollSocket.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollSocket.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3077">
-              <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
+            <state relative-caret-position="282">
+              <caret line="202" column="0" selection-start-line="202" selection-start-column="0" selection-end-line="205" selection-end-column="74" />
               <folding />
             </state>
           </provider>
@@ -104,14 +102,14 @@
       </file>
       <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider editor-type-id="text-editor">
             <state relative-caret-position="935">
               <caret line="55" column="38" selection-start-line="0" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
               <folding />
             </state>
-          </provider>
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
           </provider>
         </entry>
       </file>
@@ -131,8 +129,8 @@
       <file leaf-file-name="ConnectionActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/ConnectionActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="36" column="61" selection-start-line="0" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
+            <state relative-caret-position="170">
+              <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -140,14 +138,14 @@
       </file>
       <file leaf-file-name="activity_connection.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_connection.xml">
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider editor-type-id="text-editor">
             <state relative-caret-position="1003">
               <caret line="59" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
               <folding />
             </state>
-          </provider>
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
           </provider>
         </entry>
       </file>
@@ -2875,8 +2873,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollSocket.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_connection.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java" />
       </list>
     </option>
@@ -2912,6 +2910,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2922,8 +2921,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -2935,6 +2932,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3295,7 +3293,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29922137" sideWeight="0.5682303" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29922137" sideWeight="0.43176973" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29922137" sideWeight="0.43176973" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.49573562" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32973805" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -3339,16 +3337,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_connection.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/import-summary.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -3369,16 +3357,14 @@
           <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8913#9074#0" expanded="true" />
-            <element signature="e#9073#9074#0" expanded="true" />
-            <element signature="e#26297#27342#0" expanded="true" />
-            <element signature="e#26511#27280#0" expanded="true" />
-            <element signature="e#26669#27222#0" expanded="true" />
-            <element signature="e#27221#27222#0" expanded="true" />
-            <element signature="e#27279#27280#0" expanded="true" />
-            <element signature="e#27341#27342#0" expanded="true" />
-            <element signature="e#32271#32554#0" expanded="true" />
-            <element signature="e#32553#32554#0" expanded="true" />
+            <element signature="e#12039#14320#0" expanded="true" />
+            <element signature="e#14319#14320#0" expanded="true" />
+            <element signature="e#14386#14387#0" expanded="true" />
+            <element signature="e#14417#14418#0" expanded="true" />
+            <element signature="e#15316#15639#0" expanded="true" />
+            <element signature="e#15638#15639#0" expanded="true" />
+            <element signature="e#33462#33745#0" expanded="true" />
+            <element signature="e#33744#33745#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3433,16 +3419,14 @@
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8913#9074#0" expanded="true" />
-            <element signature="e#9073#9074#0" expanded="true" />
-            <element signature="e#26297#27342#0" expanded="true" />
-            <element signature="e#26511#27280#0" expanded="true" />
-            <element signature="e#26669#27222#0" expanded="true" />
-            <element signature="e#27221#27222#0" expanded="true" />
-            <element signature="e#27279#27280#0" expanded="true" />
-            <element signature="e#27341#27342#0" expanded="true" />
-            <element signature="e#32271#32554#0" expanded="true" />
-            <element signature="e#32553#32554#0" expanded="true" />
+            <element signature="e#12039#14320#0" expanded="true" />
+            <element signature="e#14319#14320#0" expanded="true" />
+            <element signature="e#14386#14387#0" expanded="true" />
+            <element signature="e#14417#14418#0" expanded="true" />
+            <element signature="e#15316#15639#0" expanded="true" />
+            <element signature="e#15638#15639#0" expanded="true" />
+            <element signature="e#33462#33745#0" expanded="true" />
+            <element signature="e#33744#33745#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3497,16 +3481,14 @@
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8913#9074#0" expanded="true" />
-            <element signature="e#9073#9074#0" expanded="true" />
-            <element signature="e#26297#27342#0" expanded="true" />
-            <element signature="e#26511#27280#0" expanded="true" />
-            <element signature="e#26669#27222#0" expanded="true" />
-            <element signature="e#27221#27222#0" expanded="true" />
-            <element signature="e#27279#27280#0" expanded="true" />
-            <element signature="e#27341#27342#0" expanded="true" />
-            <element signature="e#32271#32554#0" expanded="true" />
-            <element signature="e#32553#32554#0" expanded="true" />
+            <element signature="e#12039#14320#0" expanded="true" />
+            <element signature="e#14319#14320#0" expanded="true" />
+            <element signature="e#14386#14387#0" expanded="true" />
+            <element signature="e#14417#14418#0" expanded="true" />
+            <element signature="e#15316#15639#0" expanded="true" />
+            <element signature="e#15638#15639#0" expanded="true" />
+            <element signature="e#33462#33745#0" expanded="true" />
+            <element signature="e#33744#33745#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3613,23 +3595,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dJISDKLIB/src/main/res/layout/dialog_login.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dJISDKLIB/src/main/res/layout/log_dialog_view.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/siedzi.PNG">
@@ -3640,14 +3622,6 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/stoi.PNG">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollSocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3077">
-          <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -3672,31 +3646,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/FPVDemoApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1496">
-          <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/ConnectionActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="36" column="61" selection-start-line="0" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_connection.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="1003">
           <caret line="59" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-23/android/graphics/Bitmap.java">
@@ -3717,41 +3675,71 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/ConnectionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-23/java/io/OutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="102" column="16" selection-start-line="102" selection-start-column="16" selection-end-line="102" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/FPVDemoApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollBTsimple.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2969">
+        <state relative-caret-position="-1964">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/CTrollSocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="202" column="0" selection-start-line="202" selection-start-column="0" selection-end-line="205" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="935">
           <caret line="55" column="38" selection-start-line="0" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/dji/FPVDemo/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="955" column="35" selection-start-line="955" selection-start-column="35" selection-end-line="955" selection-end-column="35" />
+        <state relative-caret-position="275">
+          <caret line="965" column="69" selection-start-line="0" selection-start-column="0" selection-end-line="1010" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8913#9074#0" expanded="true" />
-            <element signature="e#9073#9074#0" expanded="true" />
-            <element signature="e#26297#27342#0" expanded="true" />
-            <element signature="e#26511#27280#0" expanded="true" />
-            <element signature="e#26669#27222#0" expanded="true" />
-            <element signature="e#27221#27222#0" expanded="true" />
-            <element signature="e#27279#27280#0" expanded="true" />
-            <element signature="e#27341#27342#0" expanded="true" />
-            <element signature="e#32271#32554#0" expanded="true" />
-            <element signature="e#32553#32554#0" expanded="true" />
+            <element signature="e#12039#14320#0" expanded="true" />
+            <element signature="e#14319#14320#0" expanded="true" />
+            <element signature="e#14386#14387#0" expanded="true" />
+            <element signature="e#14417#14418#0" expanded="true" />
+            <element signature="e#15316#15639#0" expanded="true" />
+            <element signature="e#15638#15639#0" expanded="true" />
+            <element signature="e#33462#33745#0" expanded="true" />
+            <element signature="e#33744#33745#0" expanded="true" />
           </folding>
         </state>
       </provider>

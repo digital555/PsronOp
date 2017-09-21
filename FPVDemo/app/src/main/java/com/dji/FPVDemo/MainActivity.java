@@ -135,14 +135,16 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     String[] DogIMU = new String[10];
 
     private LightbridgeLink link;
+
     private Thread Thread1;
     private Thread Thread2;
     private Thread Thread3;
     private Thread Thread4;
+    private Thread Thread5;
 
     private FlightController mFlightController;
 
-    private double droneLocationLat = 181, droneLocationLng = 181;
+    private double droneLocationLat = 181, droneLocationLng = 181, droneLocationAtt = 181;
     private String strLat = "", strLng = "";
 
     //static CTrollBTsimple TrollBT = new CTrollBTsimple();
@@ -307,39 +309,54 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
 
     private void initFlightController() {
+
         BaseProduct product = FPVDemoApplication.getProductInstance();
-        if (product != null && product.isConnected()) {
-            if (product instanceof Aircraft) {
-                mFlightController = ((Aircraft) product).getFlightController();
+            if (product != null && product.isConnected()) {
+                if (product instanceof Aircraft) {
+                    mFlightController = ((Aircraft) product).getFlightController();
+                }
             }
-        }
-        if (mFlightController != null) {
-            mFlightController.setStateCallback(
-                    new FlightControllerState.Callback() {
-                        @Override
-                        public void onUpdate(FlightControllerState djiFlightControllerCurrentState) {
-                            try {
-                                droneLocationLat = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
-                                droneLocationLng = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
-                                sendGPSData(droneLocationLat, droneLocationLng);
-                                showToast(String.valueOf(droneLocationLat) + " ; " + String.valueOf(droneLocationLng));
+            if (mFlightController != null) {
 
-                                backgroudWebview.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+String.valueOf(droneLocationLat)+"&longitude="+
-                                                String.valueOf(droneLocationLng)+"&drone_id=24");
+                    mFlightController.setStateCallback(
+                            new FlightControllerState.Callback() {
+                                @Override
+                                public void onUpdate(FlightControllerState djiFlightControllerCurrentState) {
+                                    try {
+                                    /*droneLocationLat = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
+                                    droneLocationLng = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
+                                    droneLocationAtt = djiFlightControllerCurrentState.getAircraftLocation().getAltitude();
+                                    sendGPSData(droneLocationLat, droneLocationLng);*/
+
+
+                                        showToast(String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getLatitude()) + " ; " +
+                                                String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getLongitude()) + " ; " +
+                                                String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getAltitude()));
+
+
+                                    /*droneLocationLat = 0;
+                                    droneLocationLng = 0;
+                                    droneLocationAtt = 0;*/
+
+                                    /*backgroudWebview.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if(droneLocationLat > 0) {
+                                                backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude=" + String.valueOf(droneLocationLat) + "&longitude=" +
+                                                        String.valueOf(droneLocationLng) + "&drone_id=28");
+                                            }
+                                        }
+                                    });*/
+
+
+                                        //updateDroneLocation();
+                                    } catch (Exception e) {
+                                        showToast(e.toString());
                                     }
-                                });
+                                }
+                            });
+                }
 
-
-                                //updateDroneLocation();
-                            } catch (Exception e){
-                                showToast(e.toString());
-                            }
-                        }
-                    });
-        }
     }
 
     protected void onProductChange() {
@@ -471,6 +488,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
         Thread2.stop();
         Thread3.stop();
         Thread4.stop();
+        Thread5.stop();
         super.onDestroy();
     }
 
@@ -624,6 +642,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 flag1 = false;
                 Thread4 = new Thread(new casVideoSurfaceTCP());
                 Thread4.start();
+                Thread5 = new Thread(new droneLocSender());
+                //Thread5.start();
+
                 //link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
                 break;
             }
@@ -646,11 +667,11 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 }
 
                 Thread1 = new Thread(new MyRun1());
-                Thread1.start();
+                //Thread1.start();
                 Thread2 = new Thread(new MyRun2());
-                Thread2.start();
+                //Thread2.start();
                 Thread3 = new Thread(new receiveTCP());
-                Thread3.start();
+                //Thread3.start();
 
                 //receive();
                 break;
@@ -822,9 +843,10 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 }
 
                 try {
-                    Thread.sleep(25);
+                    Thread1.sleep(50);
+                    //showToast("awake");
                 } catch (Exception e){
-
+                    showToast(e.toString() + "try sleep");
                 }
 
             }
@@ -921,12 +943,15 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
                     //sends the message to the client
                     PrintStream out = new PrintStream(socket2.getOutputStream(), true);
+                    OutputStream os = socket2.getOutputStream();
 
                     //read the message received from client
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket2.getInputStream()));
 
                     //in this while we wait to receive messages from client (it's an infinite loop)
                     //this while it's like a listener for messages
+                    byte[] buffer = new byte[4];
+                    int byteCount;
 
                     ByteBuffer bb = ByteBuffer.allocate(4);
                     bb.order(ByteOrder.LITTLE_ENDIAN);
@@ -936,13 +961,18 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                         Bitmap.createScaledBitmap(mVideoSurface.getBitmap(), 480,
                                 270, false).compress(Bitmap.CompressFormat.JPEG, 10, outputStream);
                         frameToMcd = outputStream.toByteArray();
-                        out.println(ByteBuffer.allocate(4).putInt(frameToMcd.length).array());
-                        out.println(frameToMcd);
-                        showToast(" " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[0] +
+                        byteCount = frameToMcd.length;
+                        buffer[0] = (byte) (byteCount >> 24);
+                        buffer[1] = (byte) ( (byteCount << 8) >> 24);
+                        buffer[2] = (byte) ( (byteCount << 16) >> 24);
+                        buffer[3] = (byte) ( (byteCount << 24) >> 24);
+                        os.write(buffer);
+                        os.write(frameToMcd, 0, frameToMcd.length);
+                        showToast(frameToMcd.length + " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[0] +
                                 " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[1] +
                                 " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[2] +
                                 " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[3]);
-
+                        os.flush();
                     }
 
                 } catch (Exception e) {
@@ -956,6 +986,20 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
             } catch (Exception e) {
                 System.out.println("S: Error");
                 e.printStackTrace();
+            }
+        }
+    }
+
+    public class droneLocSender implements Runnable{
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    initFlightController();
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    showToast(e.toString() + " droneLocSender");
+                }
             }
         }
     }

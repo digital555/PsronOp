@@ -114,7 +114,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     private BufferedReader mBufferIn;
 
 
-    private final int SERVER_PORT = 1234; //Define the server port
+    private final int SERVER_PORT = 23233; //Define the server port
     //static CTrollSocket trollSocket = new CTrollSocket();
     static Semaphore sema = new Semaphore(1);
     public byte[] dataMichal = new byte[10];
@@ -124,7 +124,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
     public Bitmap bmpFromMcd;
     public Bitmap bmpToMcd;
-    public byte[] frameFrom = new byte[60000];
+    public byte[] frameFrom = new byte[4096];
     public byte[] frameToMcd = new byte[60000];
     public byte[] GPSBatch = new byte[60000];
     public byte[] IMUBatch = new byte[60000];
@@ -263,7 +263,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 location.getLatitude();
                 location.getLongitude();
 
-                showToast(String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
+                //showToast(String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
 
                 strLat = String.valueOf(location.getLatitude());
                 strLng = String.valueOf(location.getLongitude());
@@ -271,7 +271,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 backgroudWebview.post(new Runnable() {
                     @Override
                     public void run() {
-                        backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+strLat+"&longitude="+strLng+"&dog_id=21");
+                        //backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+strLat+"&longitude="+strLng+"&dog_id=21");
                     }
                 });
 
@@ -280,17 +280,17 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-                showToast(provider + " StatusChanged");
+                //showToast(provider + " StatusChanged");
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-                showToast(provider + " onProviderEnabled");
+                //showToast(provider + " onProviderEnabled");
             }
 
             @Override
             public void onProviderDisabled(String provider) {
-                showToast(provider + " onProviderDisabled");
+                //showToast(provider + " onProviderDisabled");
             }
         };
 
@@ -311,6 +311,8 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     private void initFlightController() {
 
         BaseProduct product = FPVDemoApplication.getProductInstance();
+
+        while (true) {
             if (product != null && product.isConnected()) {
                 if (product instanceof Aircraft) {
                     mFlightController = ((Aircraft) product).getFlightController();
@@ -318,20 +320,20 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
             }
             if (mFlightController != null) {
 
-                    mFlightController.setStateCallback(
-                            new FlightControllerState.Callback() {
-                                @Override
-                                public void onUpdate(FlightControllerState djiFlightControllerCurrentState) {
-                                    try {
+                mFlightController.setStateCallback(
+                        new FlightControllerState.Callback() {
+                            @Override
+                            public void onUpdate(FlightControllerState djiFlightControllerCurrentState) {
+                                try {
                                     /*droneLocationLat = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
                                     droneLocationLng = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
                                     droneLocationAtt = djiFlightControllerCurrentState.getAircraftLocation().getAltitude();
                                     sendGPSData(droneLocationLat, droneLocationLng);*/
 
 
-                                        showToast(String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getLatitude()) + " ; " +
-                                                String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getLongitude()) + " ; " +
-                                                String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getAltitude()));
+                                    /*showToast(String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getLatitude()) + " ; " +
+                                            String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getLongitude()) + " ; " +
+                                            String.valueOf(djiFlightControllerCurrentState.getAircraftLocation().getAltitude()));*/
 
 
                                     /*droneLocationLat = 0;
@@ -349,13 +351,16 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                                     });*/
 
 
-                                        //updateDroneLocation();
-                                    } catch (Exception e) {
-                                        showToast(e.toString());
-                                    }
+                                    //updateDroneLocation();
+
+                                    Thread.sleep(1000);
+                                } catch (Exception e) {
+                                    showToast(e.toString());
                                 }
-                            });
-                }
+                            }
+                        });
+            }
+        }
 
     }
 
@@ -671,7 +676,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 Thread2 = new Thread(new MyRun2());
                 //Thread2.start();
                 Thread3 = new Thread(new receiveTCP());
-                //Thread3.start();
+                Thread3.start();
 
                 //receive();
                 break;
@@ -892,25 +897,96 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 try {
 
                     //sends the message to the client
-                    //PrintStream out = new PrintStream(socket1.getOutputStream(), true);
+                    PrintStream out = new PrintStream(socket1.getOutputStream(), true);
+                    //showToast("Creating connection");
 
                     //read the message received from client
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket1.getInputStream()));
+                    //BufferedReader in = new BufferedReader(new InputStreamReader(socket1.getInputStream()));
+                    InputStream in = socket1.getInputStream();
+                    //ByteArrayInputStream byteArrayInputStream;// = new ByteArrayInputStream();
 
+                    //showToast("Incoming connection");
+                    byte[] buffer = new byte[4];
+                    char[]  buffer2 = new char[4];
+                    final byte [] newFrame = new byte[1000000];
                     //in this while we wait to receive messages from client (it's an infinite loop)
                     //this while it's like a listener for messages
+                    byte[] initializer = {(byte) 's'};
+                    out.write(initializer);
+                    int counter = 0;
                     while (true) {
-                        frameFrom = in.readLine().getBytes();
+                        //showToast("Wait...");
+                        /*buffer[0] = (byte)in.read();
+                        showToast("Got 1 : " + String.valueOf(buffer[0]));
+                        buffer[1] = (byte)in.read();
+                        showToast("Got 2 : " + String.valueOf(buffer[1]));
+                        buffer[2] = (byte)in.read();
+                        showToast("Got 3 : " + String.valueOf(buffer[2]));
+                        buffer[3] = (byte)in.read();
+                        showToast("Got 4 : " + String.valueOf(buffer[3]));*/
+                        //String s = in.readLine();
+                        in.read(buffer);
+
+                        //showToast(String.valueOf(buffer.length) + " " + String.valueOf(buffer[0])+ " " + String.valueOf(buffer[1])+ " " + String.valueOf(buffer[2])+ " " + String.valueOf(buffer[3]) );
+                        int i1 = buffer[0] & 0xff;
+                        int i2 = buffer[1] & 0xff;
+                        int i3 = buffer[2] & 0xff;
+                        int i4 = buffer[3] & 0xff;
+                        final int imageSize = ( i1 << 24) + (i2 << 16) + (i3 << 8) + i4;
+
+                        //showToast(String.valueOf(imageSize));
+                        //if(imageSize > 0 && imageSize < 1000000) {
+                            int readed = 0;
+                            while(readed < imageSize) {
+                                int result = in.read(newFrame, readed, imageSize - readed);
+                                if(result > 0)
+                                    readed += result;
+                                else {
+                                    readed = result;
+                                    break;
+                                }
+                            }
+
                         runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mImageViewMCD.setImageBitmap(BitmapFactory.decodeByteArray(newFrame, 0, imageSize));
+                            }
+                        });
+
+
+                            //showToast(String.valueOf(readed));
+                        //}
+
+
+
+                        out.write(initializer);
+
+                        //frameFrom = new byte[imageSize];
+
+                        //frameFrom = in.readLine().getBytes();
+
+                        //showToast("imageSize: " + String.valueOf(imageSize));
+
+                        //showToast(String.valueOf(frameFrom.length) + " " + String.valueOf(buffer.length));
+                        /*
+                        while (counter < imageSize) {
+                            in.read(frameFrom,0, imageSize);
+                            counter++;
+                        }
+                        */
+
+                        /*runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 mImageViewMCD.setImageBitmap(BitmapFactory.decodeByteArray(frameFrom, 0, frameFrom.length));
                             }
-                        });
-                        showToast(String.valueOf("TCP message length " + frameFrom.length));
+                        });*/
+                        //showToast(String.valueOf("TCP message length " + frameFrom.length));
                     }
 
                 } catch (Exception e) {
+                    showToast(e.getMessage());
                     System.out.println("S: Error");
                     e.printStackTrace();
                 } finally {
@@ -919,6 +995,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 }
 
             } catch (Exception e) {
+                showToast(e.getMessage());
                 System.out.println("S: Error");
                 e.printStackTrace();
             }
@@ -933,7 +1010,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
                 //create a server socket. A server socket waits for requests to come in over the network.
                 //ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
-                Socket socket2 = new Socket(editTextip.getText().toString(), 23233);
+                Socket socket2 = new Socket(editTextip.getText().toString(), SERVER_PORT);
 
                 //create client socket... the method accept() listens for a connection to be made to this socket and accepts it.
                 //Socket client = serverSocket.accept();
@@ -942,7 +1019,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 try {
 
                     //sends the message to the client
-                    PrintStream out = new PrintStream(socket2.getOutputStream(), true);
+                    //PrintStream out = new PrintStream(socket2.getOutputStream(), true);
                     OutputStream os = socket2.getOutputStream();
 
                     //read the message received from client
@@ -952,6 +1029,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                     //this while it's like a listener for messages
                     byte[] buffer = new byte[4];
                     int byteCount;
+
+                    byte[] initializer = {(byte) 'r'};
+                    os.write(initializer);
 
                     ByteBuffer bb = ByteBuffer.allocate(4);
                     bb.order(ByteOrder.LITTLE_ENDIAN);
@@ -968,11 +1048,9 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                         buffer[3] = (byte) ( (byteCount << 24) >> 24);
                         os.write(buffer);
                         os.write(frameToMcd, 0, frameToMcd.length);
-                        showToast(frameToMcd.length + " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[0] +
-                                " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[1] +
-                                " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[2] +
-                                " " + ByteBuffer.allocate(4).putInt(frameToMcd.length).array()[3]);
+                        //showToast(buffer[0] + " " + buffer[1] + " " + buffer[2] + " " + buffer[3]);
                         os.flush();
+                        in.read();
                     }
 
                 } catch (Exception e) {
@@ -993,14 +1071,14 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
     public class droneLocSender implements Runnable{
         @Override
         public void run() {
-            while (true) {
+            //while (true) {
                 try {
                     initFlightController();
                     Thread.sleep(5000);
                 } catch (Exception e) {
                     showToast(e.toString() + " droneLocSender");
                 }
-            }
+            //}
         }
     }
 

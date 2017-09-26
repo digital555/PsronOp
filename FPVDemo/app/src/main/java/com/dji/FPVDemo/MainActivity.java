@@ -271,7 +271,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 backgroudWebview.post(new Runnable() {
                     @Override
                     public void run() {
-                        //backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+strLat+"&longitude="+strLng+"&dog_id=21");
+                        //backgroudWebview.loadUrl("http://cyberdog.herokuapp.com/api/add_drone_trajectory?latitude="+strLat+"&longitude="+strLng+"&dog_id=33");
                     }
                 });
 
@@ -434,7 +434,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
 
     public void sendGPSData (double lat, double lng){
 
-        GPSBatch = (lat + " " + lng).getBytes();
+        GPSBatch = ("GPS" + "\t" + lat + "\t" + lng + "\t").getBytes();
 
         try {
             addr = InetAddress.getByName(editTextip.getText().toString());
@@ -537,12 +537,12 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                     //startRecord()
                     showToast(String.valueOf(link.isSecondaryVideoOutputSupported()));
                     link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
-                    setmDogPose("IMU a b c 150");
+                    //setmDogPose("IMU a b c 150");
                 } else {
                     //stopRecord();
                     showToast(String.valueOf(link.isSecondaryVideoOutputSupported()));
                     link.setBandwidthAllocationForHDMIVideoInputPort(0, null);
-                    setmDogPose("IMU a b c 200");
+                    //setmDogPose("IMU a b c 200");
                 }
             }
         });
@@ -647,7 +647,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                 flag1 = false;
                 Thread4 = new Thread(new casVideoSurfaceTCP());
                 Thread4.start();
-                Thread5 = new Thread(new droneLocSender());
+                //Thread5 = new Thread(new droneLocSender());
                 //Thread5.start();
 
                 //link.setBandwidthAllocationForHDMIVideoInputPort(1, null);
@@ -671,10 +671,10 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
                     showToast(e.toString() + " " + "timery");
                 }
 
-                Thread1 = new Thread(new MyRun1());
+                //Thread1 = new Thread(new MyRun1());
                 //Thread1.start();
                 Thread2 = new Thread(new MyRun2());
-                //Thread2.start();
+                Thread2.start();
                 Thread3 = new Thread(new receiveTCP());
                 Thread3.start();
 
@@ -864,7 +864,7 @@ public class MainActivity extends Activity implements SurfaceTextureListener, On
         public void run() {
             while (true) {
                 try {
-                    //receiveIMUData();
+                    receiveIMUData();
                     //receive();
                 } catch (Exception e) {
                     showToast(e.toString() + " try receiveIMU");
